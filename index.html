@@ -186,10 +186,9 @@ function tailMarkup(x,y,flatten=1,angle=0){
 function plateMarkup(x,y,r=24,rotation=0){
  return `<g transform="translate(${x} ${y}) rotate(${rotation})" data-part="plate"><circle r="${r}" fill="#486b57" stroke="#2b4438" stroke-width="4"/><circle r="${r-7}" fill="none" stroke="#77947c" stroke-width="2"/><path d="M0-${r-5}v8M0 ${r-5}v-8M-${r-5} 0h8M${r-5} 0h-8" stroke="#77947c" stroke-width="2"/><circle r="4" fill="#e4d9b9" stroke="#2b4438" stroke-width="2"/></g>`;
 }
-// 描画専用の重量区分。ゲームCONFIGや必要回数には影響しない。
+// 描画専用の比例式。ゲームCONFIGや必要回数には影響しない。
 function plateStyle(weight){
- const tier=Math.min(5,Math.max(0,Math.floor(weight/50)));
- return {radius:[14,18,24,30,37,45][tier],count:[1,1,2,2,3,3][tier]};
+ return {radius:Math.round(13+(weight-20)*.29),count:1};
 }
 // 真横では手前円盤の中心＝肩接点。短い端と握りだけを円盤の後方へ出す。
 function barMount(p){
@@ -201,12 +200,11 @@ function barMount(p){
 }
 function barMarkup(p,{detached=false}={}){
  const m=barMount(p),style=plateStyle(p.weight),r=style.radius;
- const disks=[],offset=2+(r-14)*.08;
- for(let i=style.count-1;i>=(detached?1:0);i--)disks.push(plateMarkup(-i*offset,-i*offset*.5,r-i*.7));
+ const disk=detached?'':plateMarkup(0,0,r);
  return `<g data-part="barbell" data-weight="${p.weight}" data-radius="${r}" data-count="${style.count}" data-contact="${xy(m.contact)}" transform="translate(${m.x} ${m.y})">
  <g transform="rotate(${m.angle})"><path data-part="shaft" d="M0 0H${r+8}" stroke="#455d50" stroke-width="6"/><path d="M${r+1}-1H${r+8}" stroke="#a5b3a1" stroke-width="2"/></g>
  <circle data-part="far-plate-rim" cx="-3" cy="-2" r="${r-.5}" fill="#46634f" stroke="#293f34" stroke-width="2"/>
- <g data-part="near-plate-stack">${disks.join('')}</g>
+ <g data-part="near-plate-stack">${disk}</g>
  </g>`;
 }
 function dogMarkup(p,{tailFlatten=1}={}){
@@ -322,6 +320,7 @@ function draw(el,g,t){
 
  svg.setAttribute('data-pose',scene.label);
  svg.setAttribute('aria-label',`半目の犬：${g?.crushed?'紙のように潰れて滑る':g?.lock>0?'転倒・崩壊から復帰中':'横向きバーベルスクワット'}`);
+ // 床の楕円・ラインを先に描く。巨大円盤は手前に重なり、肩中心・実寸を保つ。
  svg.querySelector('[data-layer="scene"]').innerHTML=`<ellipse cx="226" cy="287" rx="137" ry="7" fill="#dfe2d2"/><path d="M21 285H399" stroke="#b7c5ae" stroke-width="2"/><g data-actor="true" stroke="#594431" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${scene.markup}</g>`;
  // 体と演出の実寸に余白を加えたカメラ。拡大しても耳・尾・転倒の端を切らない。
  const bounds=svg.querySelector('[data-actor]').getBBox();
