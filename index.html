@@ -127,7 +127,7 @@ function motionPose(g,t){
 }
 
 const VISUAL = { floor:282, recoveryStart:.70, popStart:.90, crushSeconds:1.1 };
-let visualFailure=null, visualCrush=null, visualSerial=0;
+let visualFailure=null, visualCrush=null, visualSerial=0, lastCargoPose=null;
 const clamp01=n=>Math.max(0,Math.min(1,n));
 const mix=(a,b,t)=>a+(b-a)*t;
 const ease=n=>{n=clamp01(n);return n*n*(3-2*n);};
@@ -183,35 +183,51 @@ function faceMarkup(x,y,angle=0,earSwing=0){
 function tailMarkup(x,y,flatten=1,angle=0){
  return `<g data-part="curled-tail" transform="translate(${x} ${y}) rotate(${angle}) scale(${flatten} 1)"><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#594431" stroke-width="17"/><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#d9954c" stroke-width="10"/></g>`;
 }
-function plateMarkup(x,y,r=24,rotation=0){
- return `<g transform="translate(${x} ${y}) rotate(${rotation})" data-part="plate"><circle r="${r}" fill="#486b57" stroke="#2b4438" stroke-width="4"/><circle r="${r-7}" fill="none" stroke="#77947c" stroke-width="2"/><path d="M0-${r-5}v8M0 ${r-5}v-8M-${r-5} 0h8M${r-5} 0h-8" stroke="#77947c" stroke-width="2"/><circle r="4" fill="#e4d9b9" stroke="#2b4438" stroke-width="2"/></g>`;
+// 描画専用。重量から決まる同じお盆・同じ岩配置を毎回使う（乱数なし）。
+function loadStyle(weight){
+ const progress=(weight-20)/280,radius=9+progress*9;
+ const rows=Math.min(4,1+Math.floor((weight-20)/80));
+ const baseCount=2+Math.floor((weight-20)/100),spacing=radius*1.65,rocks=[];
+ for(let row=0;row<rows;row++){
+  const count=Math.max(1,baseCount-row);
+  for(let col=0;col<count;col++){
+   const summit=row===rows-1&&col===count-1;
+   rocks.push({x:14+radius+row*radius*1.8+col*spacing,y:-radius-row*radius*1.55,
+    radius:summit&&weight>=250?radius*1.6:radius,seed:(row*7+col*3+Math.floor(weight/5))%4,row});
+  }
+ }
+ const width=14+(baseCount-1)*spacing+2*radius+10;
+ return {radius,rows,baseCount,width,rocks,top:rocks[rocks.length-1],height:Math.max(...rocks.map(s=>-s.y+s.radius))};
 }
-// 描画専用の比例式。ゲームCONFIGや必要回数には影響しない。
-function plateStyle(weight){
- return {radius:Math.round(13+(weight-20)*.29),count:1};
-}
-// 肩・後方へ広がる円盤・長さを制限した握りを、同じマウントから求める。
-function barMount(p){
- const contact=point(p.shoulder.x+18,p.shoulder.y-5),style=plateStyle(p.weight);
- const angle=Math.max(-42,Math.min(48,Math.atan2(p.hip.x-p.shoulder.x,p.hip.y-p.shoulder.y)*180/Math.PI-12+p.b*8-p.c*8));
- const rad=angle*Math.PI/180,cos=Math.cos(rad),sin=Math.sin(rad);
- const along=n=>point(contact.x+cos*n,contact.y+sin*n);
- const rear=(style.radius-13)*.8;
- // 前縁が肩を含む位置で尻尾側へ拡張。床に近づいたら円盤中心だけを少し上げる。
- const plate=point(contact.x+rear,Math.min(contact.y+rear*.08,285-style.radius-2));
- return {contact,x:plate.x,y:plate.y,angle,grip:along(Math.min(style.radius+4,40)),plate};
-}
-function barMarkup(p,{detached=false}={}){
- const m=barMount(p),style=plateStyle(p.weight),r=style.radius;
- const disk=detached?'':plateMarkup(0,0,r);
- return `<g data-part="barbell" data-weight="${p.weight}" data-radius="${r}" data-count="${style.count}" data-contact="${xy(m.contact)}" transform="translate(${m.x} ${m.y})">
- <circle data-part="far-plate-rim" cx="-3" cy="-2" r="${r-.5}" fill="#46634f" stroke="#293f34" stroke-width="2"/>
- <g data-part="near-plate-stack">${disk}</g>
+function rockMarkup(x,y,radius,rotation=0,seed=0){
+ const colors=['#999184','#aaa294','#7f7c72','#918d83'];
+ return `<g data-part="rock" data-radius="${radius}" data-seed="${seed}" transform="translate(${x} ${y}) rotate(${rotation}) scale(${radius})">
+ <path d="M-.88 .2Q-.95-.15-.72-.52L-.3-.9Q-.1-1 .24-.88L.68-.62Q.88-.42 .94-.05L.86 .5Q.75 .8 .5 .86Q.25 1 0 1Q-.3 1-.64 .74Q-.9 .52-.88 .2Z" fill="${colors[seed%4]}" stroke="#5e5b52" stroke-width="${2/radius}"/>
+ <path d="M-.72-.5L-.3-.9 .24-.88 .65-.59 .1-.38Z" fill="#d6cfc1" opacity=".75" stroke="none"/>
+ <path d="M-.64 .65L-.08 .4 .78 .38 .5 .86Q.25 1 0 1Q-.3 1-.64 .74Z" fill="#615f56" opacity=".34" stroke="none"/>
+ <path d="M-.27-.22L-.04 .12 .3 .04M.52-.22L.42 .02" fill="none" stroke="#69665d" stroke-width="${1/radius}"/>
  </g>`;
+}
+function trayMarkup(width){
+ return `<g data-part="tray"><path d="M-6 0H${width+6}L${width+1} 10Q${width/2} 17-1 10Z" fill="#b99a65" stroke="#665239" stroke-width="3"/><path d="M-5 0H${width+5}" stroke="#ead5a6" stroke-width="4"/><path d="M5 8Q${width/2} 13 ${width-5} 8" stroke="#8c704b" stroke-width="2" fill="none"/></g>`;
+}
+// 肩・お盆・手・頂上岩のすべてをこのローカル座標系から導く。
+function loadMount(p){
+ const contact=p.loadContact??point(p.shoulder.x+18,p.shoulder.y-5);
+ const angle=p.loadAngle??Math.max(-42,Math.min(48,Math.atan2(p.hip.x-p.shoulder.x,p.hip.y-p.shoulder.y)*180/Math.PI-12+p.b*8-p.c*8));
+ const rad=angle*Math.PI/180,cos=Math.cos(rad),sin=Math.sin(rad),style=loadStyle(p.weight);
+ const project=(x,y)=>point(contact.x+cos*x-sin*y,contact.y+sin*x+cos*y);
+ return {contact,x:contact.x,y:contact.y,angle,grip:project(5,4),top:project(style.top.x,style.top.y),project};
+}
+function loadMarkup(p,{detached=false,retained=null}={}){
+ const m=loadMount(p),style=loadStyle(p.weight);
+ const rocks=retained===null?style.rocks:style.rocks.slice(0,retained);
+ return `<g data-part="cargo" data-weight="${p.weight}" data-count="${rocks.length-(detached?1:0)}" data-rows="${style.rows}" transform="translate(${m.x} ${m.y}) rotate(${m.angle})">
+ ${trayMarkup(style.width)}<g data-part="rock-stack">${rocks.map((stone,i)=>detached&&i===rocks.length-1?'':rockMarkup(stone.x,stone.y,stone.radius,0,stone.seed)).join('')}</g></g>`;
 }
 function dogMarkup(p,{tailFlatten=1}={}){
  const {hip:h,knee:k,ankle:a,shoulder:s,head,upper:u,lower:l}=p;
- const grip=barMount(p).grip;
+ const grip=loadMount(p).grip;
  const clip='body-clip-'+(++visualSerial);
  const both=Math.min(p.b,p.c),mid=point((h.x+s.x)/2+26+p.b*18,(h.y+s.y)/2-p.b*9);
  const spine=`M${h.x+18} ${h.y+5} C${h.x+45-p.c*60} ${h.y-7} ${h.x+20-p.c*72} ${h.y-30} ${xy(mid)} C${mid.x+both*45} ${mid.y-12} ${xy(u)} ${s.x+18} ${s.y-5}`;
@@ -247,7 +263,7 @@ function failureScene(f,g,t){
  const pop=ease((q-VISUAL.popStart)/(1-VISUAL.popStart));
  const popDog=p=>`<g transform="translate(0 ${282-10*Math.sin(Math.PI*pop)}) scale(1 ${.3+.7*pop}) translate(0 -282)">${dogMarkup(p)}</g>`;
  const standing=sidePose({weight:g.weight},t),source=sidePose(f.snapshot,t);
- let dog='',bar='',effects='',transform='',label=f.kind;
+ let dog='',cargo='',effects='',transform='',label=f.kind;
  // 同じ関節点の補間で失敗直前の姿勢から予備動作へつなぐ。
  const blendPose=(a,b,n)=>Object.fromEntries(Object.keys(a).map(k=>[k,typeof a[k]==='number'?mix(a[k],b[k],n):point(mix(a[k].x,b[k].x,n),mix(a[k].y,b[k].y,n))]));
  if(f.kind==='hip'||f.kind==='ankle'){
@@ -258,34 +274,37 @@ function failureScene(f,g,t){
   const windup=-Math.sin(Math.PI*wind)*5*(1-stunt);
   transform=`translate(${slide} ${-lift+impact-14*Math.sin(Math.PI*pop)}) rotate(${angle+windup} ${pivot} 282)`;
   dog=`<g transform="${transform}">${dogMarkup(p,{tailFlatten:back&&stunt>.8?.18:1})}</g>`;
-  bar=`<g transform="${transform}">${barMarkup(p,{detached:!back&&q>.44&&q<.91})}</g>`;
+  cargo=`<g transform="${transform}">${loadMarkup(p,{detached:!back&&q>.44&&q<.91})}</g>`;
   if(!back&&q>.44&&q<.91){
-   // 1枚が地面を転がり、楕円を1周して肩へ帰る。ロック時間には影響しない。
+   // 頂上の岩1個が転がり落ちて周回し、お盆の同じ位置へ帰る。
    const orbit=clamp01((q-.54)/.29),theta=orbit*Math.PI*2;
-   // 床285から半径と輪郭半幅2を引く。大円盤も床へ埋めず、同じ周回曲線を使う。
-   const floorY=285-plateStyle(g.weight).radius-2;
+   // 岩の半径＋輪郭半幅1から床の静止高さを求める。
+   const stone=loadStyle(g.weight).top,floorY=285-stone.radius-1;
    let x=88-49*Math.sin(theta),y=floorY-16*(1-Math.cos(theta));
    // 実際のマウント中心に、描画と同じ回転・反動を適用して離脱／帰着点を共有。
-   const mounted=barMount(p).plate,rad=(angle+windup)*Math.PI/180;
+   const mounted=loadMount(p).top,rad=(angle+windup)*Math.PI/180;
    const mountedX=pivot+(mounted.x-pivot)*Math.cos(rad)-(mounted.y-282)*Math.sin(rad)+slide;
    const mountedY=282+(mounted.x-pivot)*Math.sin(rad)+(mounted.y-282)*Math.cos(rad)-lift+impact-14*Math.sin(Math.PI*pop);
    if(q<.54){const drop=ease((q-.44)/.10);x=mix(mountedX,88,drop);y=mix(mountedY,floorY,drop);}
    if(q>.83){const catchUp=ease((q-.83)/.08);x=mix(88,mountedX,catchUp);y=mix(floorY,mountedY,catchUp);}
-   effects+=plateMarkup(x,y,plateStyle(g.weight).radius,orbit*720);
+   effects+=rockMarkup(x,y,stone.radius,loadMount(p).angle+angle+windup+orbit*720,stone.seed);
   }
   effects+=dustMarkup(back?355:42,281,clamp01((q-.53)/.25));
  }else if(f.kind==='knee'){
   const slide=-79*stunt*(1-returning),bounce=-9*Math.sin(Math.PI*pop)-(q>.49&&q<.66?7*Math.sin((q-.49)/.17*Math.PI):0);
   const windPose={...source,knee:point(source.knee.x-8*wind,source.knee.y)};
   dog=`<g transform="translate(${slide} ${bounce})">${q<.18?dogMarkup(windPose):(q<VISUAL.popStart?bellyMarkup():popDog(standing))}</g>`;
-  const p=blendPose(source,{...standing,shoulder:point(169,240)},wind);
-  bar=`<g transform="translate(${slide} ${bounce})">${barMarkup(q<.18?windPose:blendPose(p,standing,pop))}</g>`;
+  const p=blendPose(source,{...standing,shoulder:point(160,223)},wind);
+  const carrier=q<.18?windPose:blendPose(p,standing,pop);
+  const carrierAngle=mix(mix(loadMount(source).angle,0,wind),loadMount(standing).angle,pop);
+  cargo=`<g transform="translate(${slide} ${bounce})">${loadMarkup({...carrier,loadAngle:carrierAngle})}</g>`;
   effects=dustMarkup(245+slide,281,clamp01((q-.4)/.35));
  }else if(f.kind==='back'){
   const roll=-101*stunt*(1-returning),rotation=-360*stunt;
   dog=`<g transform="translate(${roll} ${-10*Math.sin(Math.PI*pop)})">${q<.18?`<g opacity="${1-wind}">${dogMarkup(source)}</g><g opacity="${wind}">${ballMarkup(0)}</g>`:(q<VISUAL.popStart?ballMarkup(rotation):popDog(standing))}</g>`;
-  const p=blendPose(source,{...standing,shoulder:point(233,228)},wind);
-  bar=`<g transform="translate(${roll} 0)">${barMarkup(blendPose(p,standing,pop))}</g>`;
+  const p=blendPose(source,{...standing,shoulder:point(225,220)},wind);
+  const carrier=blendPose(p,standing,pop),carrierAngle=mix(mix(loadMount(source).angle,30,wind),loadMount(standing).angle,pop);
+  cargo=`<g data-part="ball-cargo" transform="translate(${roll} ${-10*Math.sin(Math.PI*pop)}) translate(230 243) rotate(${rotation}) translate(-230 -243)">${loadMarkup({...carrier,loadAngle:carrierAngle})}</g>`;
   effects=dustMarkup(198+roll,281,clamp01((q-.51)/.25));
  }else{
   // 反り切ったブリッジを保持→崩落→バウンド。腹のクリーム色が天井を向く。
@@ -293,33 +312,43 @@ function failureScene(f,g,t){
   const bounce=q>.59&&q<.70?-17*Math.sin((q-.59)/.11*Math.PI):0;
   const slide=53*stunt*(1-returning),sy=mix(squash,1,pop);
   dog=`<g transform="translate(${slide} ${282+bounce}) scale(1 ${sy}) translate(0 -282)">${q<.18?`<g opacity="${1-wind}">${dogMarkup(source)}</g><g opacity="${wind}">${bridgeMarkup()}</g>`:(q<VISUAL.popStart?bridgeMarkup(arch):dogMarkup(standing))}</g>`;
-  const p=blendPose(source,{...standing,shoulder:point(190,239)},wind);
-  bar=`<g transform="translate(${slide} ${bounce+(1-sy)*30})">${barMarkup(blendPose(p,standing,pop))}</g>`;
+  const p=blendPose(source,{...standing,shoulder:point(180,225)},wind);
+  const carrier=blendPose(p,standing,pop),carrierAngle=mix(mix(loadMount(source).angle,0,wind),loadMount(standing).angle,pop);
+  const mount=loadMount(carrier),follow=(1-sy)*(282-mount.contact.y);
+  cargo=`<g transform="translate(${slide} ${bounce+follow})">${loadMarkup({...carrier,loadAngle:carrierAngle})}</g>`;
   effects=dustMarkup(220+slide,281,clamp01((q-.55)/.25));
  }
- return {markup:bar+dog+effects,label:`failure-${label}`,progress:q};
+ return {markup:cargo+dog+effects,label:`failure-${label}`,progress:q};
 }
 function crushedScene(t){
  const q=clamp01((t-visualCrush.started)/(VISUAL.crushSeconds*1000)),slide=53*(1-Math.pow(1-q,3));
  if(q>=1)visualCrush.complete=true;
- const p=sidePose({weight:visualCrush.owner.weight},t),bounce=-Math.abs(Math.sin(q*Math.PI*2))*33*(1-q);
- // 接点が肩y−5なので、円盤の下端＋輪郭が床285に収まる静止高さにする。
- const restShoulderY=Math.min(254,285-plateStyle(p.weight).radius-2+5);
- return {label:'paper-slide',progress:q,markup:`<g transform="translate(${slide} ${bounce})">${barMarkup({...p,shoulder:point(215,restShoulderY)})}</g><g data-pose="paper" transform="translate(${slide-22} 282) scale(1.12 .035) translate(0 -282)">${dogMarkup(p)}</g>`};
+ const p=sidePose({weight:visualCrush.owner.weight},t),source=visualCrush.source,m=loadMount(source),style=loadStyle(p.weight);
+ const keep=Math.min(2,Math.max(1,style.rocks.length-1)),settle=ease(q/.38);
+ const remaining={...p,loadContact:point(mix(m.contact.x,200+slide*.4,settle),mix(m.contact.y,270,settle)),loadAngle:mix(m.angle,0,settle)};
+ let scattered='';
+ style.rocks.slice(keep).forEach((stone,j)=>{
+  const start=m.project(stone.x,stone.y),u=clamp01((q-.05-j*.018)/.72),drift=1-Math.pow(1-u,3);
+  const floorY=285-stone.radius-1,targetX=58+(j*47)%330;
+  const impact=clamp01((u-.72)/.28);
+  const y=u<.72?mix(start.y,floorY,Math.pow(u/.72,2)):floorY-Math.abs(Math.sin(impact*Math.PI*2))*(1-impact)*8;
+  scattered+=rockMarkup(mix(start.x,targetX,drift),y,stone.radius,mix(m.angle,(j%2?-1:1)*360,drift),stone.seed);
+ });
+ return {label:'stone-avalanche',progress:q,markup:`${loadMarkup(remaining,{retained:keep})}<g data-part="scattered-rocks">${scattered}</g><g data-pose="paper" transform="translate(${slide-22} 282) scale(1.12 .035) translate(0 -282)">${dogMarkup(p)}</g>`};
 }
 function draw(el,g,t){
  let scene;
  if(g?.crushed){
-  if(visualCrush?.owner!==g)visualCrush={owner:g,started:t};
+  if(visualCrush?.owner!==g)visualCrush={owner:g,started:t,source:lastCargoPose?.owner===g?lastCargoPose.pose:sidePose(g,t)};
   scene=crushedScene(t);
  }else if(g?.lock>0&&visualFailure?.owner===g)scene=failureScene(visualFailure,g,t);
- else {const p=sidePose(g,t,motionPose(g,t));const shake=g?.load.tier>0?p.tremor*.45:0;scene={label:'squat',markup:`<g transform="translate(${shake} ${Math.sin(t/19)*Math.abs(shake)*.45})">${barMarkup(p)+dogMarkup(p)}</g>`};}
+ else {const p=sidePose(g,t,motionPose(g,t));if(g)lastCargoPose={owner:g,pose:p};const shake=g?.load.tier>0?p.tremor*.45:0;scene={label:'squat',markup:`<g transform="translate(${shake} ${Math.sin(t/19)*Math.abs(shake)*.45})">${loadMarkup(p)+dogMarkup(p)}</g>`};}
  let svg=el.querySelector('svg[data-character]');
  if(!svg){el.insertAdjacentHTML('afterbegin','<svg data-character="true" viewBox="0 0 420 320" role="img" aria-label="半目の犬の横向きスクワット"><g data-layer="scene"></g></svg>');svg=el.querySelector('svg[data-character]');}
 
  svg.setAttribute('data-pose',scene.label);
- svg.setAttribute('aria-label',`半目の犬：${g?.crushed?'紙のように潰れて滑る':g?.lock>0?'転倒・崩壊から復帰中':'横向きバーベルスクワット'}`);
- // 床→後方の円盤→犬と手。前半身を見せ、実寸の大荷物を背中に重ねる。
+ svg.setAttribute('aria-label',`半目の犬：${g?.crushed?'岩が崩れ落ち、紙のように潰れて滑る':g?.lock>0?'転倒・崩壊から復帰中':'横向きの岩積みスクワット'}`);
+ // 床→お盆と岩→犬と手。前半身と、お盆前縁を支える手を見せる。
  svg.querySelector('[data-layer="scene"]').innerHTML=`<ellipse cx="226" cy="287" rx="137" ry="7" fill="#dfe2d2"/><path d="M21 285H399" stroke="#b7c5ae" stroke-width="2"/><g data-actor="true" stroke="#594431" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${scene.markup}</g>`;
  // 体と演出の実寸に余白を加えたカメラ。拡大しても耳・尾・転倒の端を切らない。
  const bounds=svg.querySelector('[data-actor]').getBBox();
