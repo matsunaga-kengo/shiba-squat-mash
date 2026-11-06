@@ -16,7 +16,8 @@
 // 試作v1の調整値。秒・kg・XPを基準とし、外部リソースは使用しない。
 const CONFIG = {
  storageKey:'yakkuru-squat-v1', duration:30, countdown:3, minWeight:20, maxWeight:300, weightStep:5,
- baseN:5, nWeightDivisor:100, warningGap:3, fallGap:6, recoverySeconds:1.5,
+ // 必要回数だけ変更：2 + floor((重量−20)/50) + 既存の過負荷追加分。
+ baseN:2, nWeightDivisor:50, warningGap:3, fallGap:6, recoverySeconds:1.5,
  formMax:100, formRecovery:18, recoveryForm:60, backDecay:7, coreDecay:6, deepThreshold:70, deepMultiplier:1.3,
  // r上限、追加N、姿勢減衰倍率、1カウントに必要なタップ数
  loads:[{max:1,extra:0,decay:1,taps:1,label:'適正'}, {max:1.25,extra:1,decay:1.2,taps:1,label:'やや重い'}, {max:1.6,extra:2,decay:1.5,taps:2,label:'重い'}, {max:Infinity,extra:2,decay:1.8,taps:3,label:'危険'}],
@@ -30,7 +31,7 @@ let record=fresh(), selected=20, muted=false, audio, game=null, view='title', la
 try{const d=JSON.parse(localStorage.getItem(CONFIG.storageKey));if(d&&Array.isArray(d.xp)&&d.xp.length===3&&d.xp.every(n=>Number.isFinite(n)&&n>=0)&&Number.isFinite(d.best)&&d.best>=0&&Number.isFinite(d.total)&&d.total>=0)record=d;}catch(e){$('saveNote').textContent='保存データを読み込めません。今回は一時記録で遊べます。';}
 const levels=()=>record.xp.map(n=>1+Math.floor(n/CONFIG.xpPerLevel));
 const recommended=()=>Math.floor((CONFIG.recommendedBase+levels().reduce((s,l,i)=>s+(l-1)*CONFIG.recommendedGains[i],0))/CONFIG.weightStep)*CONFIG.weightStep;
-function loadFor(w){const r=w/recommended(),tier=CONFIG.loads.findIndex(l=>r<=l.max),load=CONFIG.loads[tier];return {...load,tier,r,n:CONFIG.baseN+Math.floor(w/CONFIG.nWeightDivisor)+load.extra};}
+function loadFor(w){const r=w/recommended(),tier=CONFIG.loads.findIndex(l=>r<=l.max),load=CONFIG.loads[tier];return {...load,tier,r,n:CONFIG.baseN+Math.floor((w-CONFIG.minWeight)/CONFIG.nWeightDivisor)+load.extra};}
 function save(){try{localStorage.setItem(CONFIG.storageKey,JSON.stringify(record));$('saveNote').textContent='';}catch(e){$('saveNote').textContent='保存できませんでした。ブラウザの保存設定をご確認ください。';}}
 function show(v){view=v;if(v==='result')protectResultButtons();document.body.classList.toggle('playing',v==='play');for(const id of ['title','play','result'])$(id).hidden=id!==v;}
 function title(){show('title');$('levels').innerHTML=levels().map((l,i)=>`<div>${parts[i]}<b>Lv.${l}</b></div>`).join('');$('recommended').textContent=`推奨 ${recommended()} kg`;$('best').textContent=`自己ベスト ${record.best||'—'}${record.best?' kg':''}`;$('total').textContent=`累計 ${record.total} レップ`;weightUI();}
@@ -143,13 +144,30 @@ function tailMarkup(x,y,flatten=1,angle=0){
 function plateMarkup(x,y,r=24,rotation=0){
  return `<g transform="translate(${x} ${y}) rotate(${rotation})" data-part="plate"><circle r="${r}" fill="#486b57" stroke="#2b4438" stroke-width="4"/><circle r="${r-7}" fill="none" stroke="#77947c" stroke-width="2"/><path d="M0-${r-5}v8M0 ${r-5}v-8M-${r-5} 0h8M${r-5} 0h-8" stroke="#77947c" stroke-width="2"/><circle r="4" fill="#e4d9b9" stroke="#2b4438" stroke-width="2"/></g>`;
 }
+// 背骨の上端と同じ肩の接点。シャフト・プレート・握りをこの座標系で一緒に動かす。
+function barMount(p){
+ const contact=point(p.shoulder.x+18,p.shoulder.y-5);
+ const angle=Math.max(-42,Math.min(48,Math.atan2(p.hip.x-p.shoulder.x,p.hip.y-p.shoulder.y)*180/Math.PI-12+p.b*8-p.c*8));
+ const rad=angle*Math.PI/180,cos=Math.cos(rad),sin=Math.sin(rad);
+ // シャフト半径4＋肩輪郭半幅2。接点から法線方向へ6だけ離すと輪郭同士が接する。
+ const x=contact.x+sin*6,y=contact.y-cos*6;
+ const along=n=>point(x+cos*n,y+sin*n);
+ return {contact,x,y,angle,grip:along(6),plate:along(31)};
+}
 function barMarkup(p,{detached=false}={}){
- const x=p.shoulder.x+26+p.b*8,y=p.shoulder.y-4;
- // 真横から見たプレートの円。シャフトは肩の後ろを奥行き方向へ通る。
- return `<g data-part="barbell"><path d="M${x-29} ${y-9}L${x+9} ${y+3}" stroke="#657568" stroke-width="8"/>${plateMarkup(x-16,y-6,20)}${detached?'':plateMarkup(x+7,y,25)}<path d="M${x+4} ${y}h12" stroke="#c6cdb9" stroke-width="5"/></g>`;
+ const m=barMount(p);
+ return `<g data-part="barbell" data-contact="${xy(m.contact)}" data-angle="${m.angle}" transform="translate(${m.x} ${m.y}) rotate(${m.angle})">
+ <path data-part="shoulder-contact" d="M-8 6Q0 7 8 6" fill="none" stroke="#80562e" stroke-width="4"/>
+ ${plateMarkup(-26,0,16)}
+ <path data-part="shaft" d="M-37 0H43" stroke="#455d50" stroke-width="8"/>
+ <path d="M-37-1H43" stroke="#9dac9a" stroke-width="2"/>
+ ${detached?'':plateMarkup(31,0,21)}
+ <path d="M38 0h8" stroke="#c6cdb9" stroke-width="5"/>
+ </g>`;
 }
 function dogMarkup(p,{tailFlatten=1}={}){
  const {hip:h,knee:k,ankle:a,shoulder:s,head,upper:u,lower:l}=p;
+ const grip=barMount(p).grip;
  const clip='body-clip-'+(++visualSerial);
  const both=Math.min(p.b,p.c),mid=point((h.x+s.x)/2+26+p.b*18,(h.y+s.y)/2-p.b*9);
  const spine=`M${h.x+18} ${h.y+5} C${h.x+45-p.c*60} ${h.y-7} ${h.x+20-p.c*72} ${h.y-30} ${xy(mid)} C${mid.x+both*45} ${mid.y-12} ${xy(u)} ${s.x+18} ${s.y-5}`;
@@ -161,7 +179,7 @@ function dogMarkup(p,{tailFlatten=1}={}){
  <path clip-path="url(#${clip})" d="M${s.x-22} ${s.y+6} Q${s.x-10} ${s.y+21} ${s.x-19-p.c*23} ${s.y+40+p.c*16} Q${h.x-40-p.c*24} ${h.y+12} ${h.x-15} ${h.y+12} Q${h.x-1} ${h.y-7} ${s.x-22} ${s.y+6}" fill="#f7e5be" stroke="none"/>
  <path data-part="back-curve" d="${spine}" fill="none" stroke="#80562e" stroke-width="4"/>
  ${leg(0,0,'#dda05c')}
- <path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${s.x+27} ${s.y-2}" fill="none" stroke="#594431" stroke-width="17"/><path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${s.x+27} ${s.y-2}" fill="none" stroke="#e4a665" stroke-width="10"/>
+ <path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${xy(grip)}" fill="none" stroke="#594431" stroke-width="17"/><path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${xy(grip)}" fill="none" stroke="#e4a665" stroke-width="10"/>
  ${faceMarkup(head.x,head.y,p.headAngle,p.earSwing||0)}
  </g>`;
 }
@@ -201,9 +219,12 @@ function failureScene(f,g,t){
    // 1枚が地面を転がり、楕円を1周して肩へ帰る。ロック時間には影響しない。
    const orbit=clamp01((q-.54)/.29),theta=orbit*Math.PI*2;
    let x=88-49*Math.sin(theta),y=258-16*(1-Math.cos(theta));
-   if(q<.54){const drop=ease((q-.44)/.10);x=mix(109,88,drop);y=mix(179,258,drop);}
+   if(q<.54){const drop=ease((q-.44)/.10),plate=barMount(p).plate,rad=angle*Math.PI/180;
+    const fromX=pivot+(plate.x-pivot)*Math.cos(rad)-(plate.y-282)*Math.sin(rad)+slide;
+    const fromY=282+(plate.x-pivot)*Math.sin(rad)+(plate.y-282)*Math.cos(rad)-lift;
+    x=mix(fromX,88,drop);y=mix(fromY,258,drop);}
    if(q>.83){const catchUp=ease((q-.83)/.08),rad=angle*Math.PI/180;
-    const bx=p.shoulder.x+33,by=p.shoulder.y-4;
+    const plate=barMount(p).plate,bx=plate.x,by=plate.y;
     const attachedX=pivot+(bx-pivot)*Math.cos(rad)-(by-282)*Math.sin(rad)+slide;
     const attachedY=282+(bx-pivot)*Math.sin(rad)+(by-282)*Math.cos(rad)-lift;
     x=mix(88,attachedX,catchUp);y=mix(258,attachedY,catchUp);}
