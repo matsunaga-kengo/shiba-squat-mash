@@ -147,7 +147,7 @@ function plateMarkup(x,y,r=24,rotation=0){
 // 描画専用の重量区分。ゲームCONFIGや必要回数には影響しない。
 function plateStyle(weight){
  const tier=Math.min(5,Math.max(0,Math.floor(weight/50)));
- return {radius:[14,17,20,23,25,28][tier],count:[1,1,2,2,3,3][tier]};
+ return {radius:[14,18,24,30,37,45][tier],count:[1,1,2,2,3,3][tier]};
 }
 // 真横では手前円盤の中心＝肩接点。短い端と握りだけを円盤の後方へ出す。
 function barMount(p){
@@ -159,8 +159,8 @@ function barMount(p){
 }
 function barMarkup(p,{detached=false}={}){
  const m=barMount(p),style=plateStyle(p.weight),r=style.radius;
- const disks=[];
- for(let i=style.count-1;i>=(detached?1:0);i--)disks.push(plateMarkup(-i*2,-i,r-i*.7));
+ const disks=[],offset=2+(r-14)*.08;
+ for(let i=style.count-1;i>=(detached?1:0);i--)disks.push(plateMarkup(-i*offset,-i*offset*.5,r-i*.7));
  return `<g data-part="barbell" data-weight="${p.weight}" data-radius="${r}" data-count="${style.count}" data-contact="${xy(m.contact)}" transform="translate(${m.x} ${m.y})">
  <g transform="rotate(${m.angle})"><path data-part="shaft" d="M0 0H${r+8}" stroke="#455d50" stroke-width="6"/><path d="M${r+1}-1H${r+8}" stroke="#a5b3a1" stroke-width="2"/></g>
  <circle data-part="far-plate-rim" cx="-3" cy="-2" r="${r-.5}" fill="#46634f" stroke="#293f34" stroke-width="2"/>
@@ -220,16 +220,18 @@ function failureScene(f,g,t){
   if(!back&&q>.44&&q<.91){
    // 1枚が地面を転がり、楕円を1周して肩へ帰る。ロック時間には影響しない。
    const orbit=clamp01((q-.54)/.29),theta=orbit*Math.PI*2;
-   let x=88-49*Math.sin(theta),y=258-16*(1-Math.cos(theta));
+   // 床285から半径と輪郭半幅2を引く。大円盤も床へ埋めず、同じ周回曲線を使う。
+   const floorY=285-plateStyle(g.weight).radius-2;
+   let x=88-49*Math.sin(theta),y=floorY-16*(1-Math.cos(theta));
    if(q<.54){const drop=ease((q-.44)/.10),plate=barMount(p).plate,rad=angle*Math.PI/180;
     const fromX=pivot+(plate.x-pivot)*Math.cos(rad)-(plate.y-282)*Math.sin(rad)+slide;
     const fromY=282+(plate.x-pivot)*Math.sin(rad)+(plate.y-282)*Math.cos(rad)-lift;
-    x=mix(fromX,88,drop);y=mix(fromY,258,drop);}
+    x=mix(fromX,88,drop);y=mix(fromY,floorY,drop);}
    if(q>.83){const catchUp=ease((q-.83)/.08),rad=angle*Math.PI/180;
     const plate=barMount(p).plate,bx=plate.x,by=plate.y;
     const attachedX=pivot+(bx-pivot)*Math.cos(rad)-(by-282)*Math.sin(rad)+slide;
     const attachedY=282+(bx-pivot)*Math.sin(rad)+(by-282)*Math.cos(rad)-lift;
-    x=mix(88,attachedX,catchUp);y=mix(258,attachedY,catchUp);}
+    x=mix(88,attachedX,catchUp);y=mix(floorY,attachedY,catchUp);}
    effects+=plateMarkup(x,y,plateStyle(g.weight).radius,orbit*720);
   }
   effects+=dustMarkup(back?355:42,281,clamp01((q-.53)/.25));
@@ -262,7 +264,9 @@ function crushedScene(t){
  const q=clamp01((t-visualCrush.started)/(VISUAL.crushSeconds*1000)),slide=53*(1-Math.pow(1-q,3));
  if(q>=1)visualCrush.complete=true;
  const p=sidePose({weight:visualCrush.owner.weight},t),bounce=-Math.abs(Math.sin(q*Math.PI*2))*33*(1-q);
- return {label:'paper-slide',progress:q,markup:`<g data-pose="paper" transform="translate(${slide-22} 282) scale(1.12 .035) translate(0 -282)">${dogMarkup(p)}</g><g transform="translate(${slide} ${bounce})">${barMarkup({...p,shoulder:point(215,254)})}</g>`};
+ // 接点が肩y−5なので、円盤の下端＋輪郭が床285に収まる静止高さにする。
+ const restShoulderY=Math.min(254,285-plateStyle(p.weight).radius-2+5);
+ return {label:'paper-slide',progress:q,markup:`<g data-pose="paper" transform="translate(${slide-22} 282) scale(1.12 .035) translate(0 -282)">${dogMarkup(p)}</g><g transform="translate(${slide} ${bounce})">${barMarkup({...p,shoulder:point(215,restShoulderY)})}</g>`};
 }
 function draw(el,g,t){
  let scene;
