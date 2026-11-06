@@ -3,13 +3,14 @@
 <title>スクワット連打。</title>
 <style>
 :root{--ink:#273d35;--paper:#f6f2e9;--green:#42755d;--orange:#d77840;--red:#c84e44}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;overscroll-behavior:none}button,input{font:inherit;touch-action:manipulation}button{border:1px solid #d3d6c9;border-radius:14px;background:#fffcf5;color:var(--ink);cursor:pointer;font-weight:750;min-height:44px}button:active{transform:translateY(2px);background:#e6eadc}button:disabled{opacity:.55;cursor:default}button:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}.app{max-width:480px;margin:auto;padding:18px 20px max(16px,env(safe-area-inset-bottom));min-height:100svh}header{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:2px;font-weight:800}#mute{font-size:12px;letter-spacing:0;min-height:34px;padding:0 12px}h1{font-size:30px;letter-spacing:-1.5px;line-height:1.35;margin:20px 0 5px}h1 small{display:block;font-size:16px;letter-spacing:1px}.sub{font-size:12px;color:#738077;margin:4px 0}.card{background:#fffaf0;border:1px solid #dfdfd0;border-radius:18px;padding:16px;margin:12px 0}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.levels{display:flex;justify-content:space-around;text-align:center;font-size:11px}.levels b{display:block;font-size:20px;margin-top:4px}.weight{font-size:46px;font-weight:850;letter-spacing:-2px}.unit{font-size:15px;letter-spacing:0;font-weight:600}.step{width:55px;height:48px}input[type=range]{width:100%;accent-color:var(--green);height:30px}.primary{background:var(--green);color:white;border:0;width:100%;min-height:55px;font-size:17px}.warning{font-size:12px;font-weight:750;min-height:18px}.tone1{color:#986a22}.tone2,.tone3{color:var(--red)}.records{font-size:12px}.quiet{border:0;background:transparent;font-size:11px;color:#7e877b;display:block;margin:12px auto}.stage{position:relative;min-height:0;display:flex;align-items:center;justify-content:center}.stage svg{width:100%;height:100%;max-height:290px;overflow:visible}.hero{height:185px}.badge{position:absolute;bottom:7px;font-size:10px;letter-spacing:2px;color:#7a887b}.guide{font-size:12px;line-height:1.8;margin:12px 1px}.screen[hidden]{display:none!important}#play{height:calc(100dvh - 70px - env(safe-area-inset-bottom));display:flex;flex-direction:column;padding-top:12px;overflow:hidden}.timer{height:5px;background:#dce0d3;border-radius:5px;overflow:hidden}.timer i{display:block;height:100%;background:var(--green);width:100%}.score{padding-top:10px}.rep{font-size:58px;line-height:1;font-weight:850;letter-spacing:-3px}.label{font-size:10px;letter-spacing:1.5px}.stats{text-align:right;font-size:12px;line-height:1.8}.stats b{font-size:20px}.playstage{flex:1;min-height:120px}.depth{position:absolute;right:0;top:15%;bottom:17%;width:6px;background:#dce0d3;border-radius:8px}.depth i{display:block;width:100%;background:var(--orange);border-radius:8px}.depth span{position:absolute;right:10px;bottom:0;font-size:10px;white-space:nowrap}#message{text-align:center;font-size:clamp(11px,3.3vw,14px);font-weight:800;min-height:24px;color:var(--orange)}.collapse{height:24px;font-size:10px}.collapse progress{width:100%;height:6px;accent-color:var(--red)}.controls{flex:none;padding-top:8px;touch-action:none;user-select:none;-webkit-user-select:none}.formbuttons{display:flex;gap:8px;margin-bottom:9px}.formbuttons button{flex:1;padding:9px 12px;font-size:13px;text-align:left}.meter{height:5px;background:#e2e4d8;border-radius:4px;overflow:hidden;margin-top:7px}.meter i{height:100%;display:block}.joints{display:flex;gap:8px}.joints button{flex:1;height:88px;font-size:18px;background:#e7ecdf;border-color:#cbd5bf}.joints small{display:block;font-size:10px;font-weight:500;margin-top:7px;letter-spacing:1px}.joints .ahead{background:#f5d1c6;border-color:var(--red);color:var(--red);box-shadow:0 0 14px #c84e4430}.keyhint{text-align:center;font-size:9px;color:#879080;margin-top:7px}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:84px;font-weight:900;color:var(--green);pointer-events:none;text-shadow:0 2px 0 var(--paper)}#result h2{font-size:29px;margin:28px 0 5px}.resultrep{font-size:84px;font-weight:850;letter-spacing:-5px}.xp{font-size:13px;line-height:2.2}.secondary{width:100%;margin-top:10px;min-height:48px}.save-note:empty{display:none}body.playing{overflow:hidden;height:100dvh}body.playing .app{height:100dvh;min-height:0}.save-note{font-size:11px;color:var(--red);text-align:center}#result .hero{height:150px}@media(max-height:700px){.app{padding-top:10px}#play{height:calc(100dvh - 58px - env(safe-area-inset-bottom))}.joints button{height:70px}.stage svg{max-height:235px}.hero{height:140px}h1{margin-top:12px;font-size:27px}.card{margin:8px 0;padding:12px}.guide{margin:8px 0;font-size:11px}.rep{font-size:48px}}@media(prefers-reduced-motion:reduce){button:active{transform:none}}
+.resultSummary{text-align:center;margin-top:10px}.resultSummary .resultrep{font-size:60px;line-height:1}.resultSummary p{margin:6px 0;font-size:13px}.resultSummary b:empty{display:none}.resultActions{display:flex;gap:8px;margin-top:12px}.resultActions button{flex:1;min-height:48px;font-size:13px;margin:0}.resultActions .secondary{background:#fffcf5}#result h2{font-size:24px;margin:16px 0 5px}#result .hero{height:210px}#result .xp{margin-top:0}@media(max-height:700px){#result .hero{height:155px}#result h2{margin-top:10px;font-size:21px}.resultSummary{margin-top:6px}.resultSummary .resultrep{font-size:50px}.resultActions{margin-top:8px}}
 </style>
 <div class="app"><header><span>SQUAT / LEG DAY</span><button id="mute" aria-pressed="false">音 ON</button></header>
 <section id="title" class="screen"><h1>スクワット連打<span style="color:var(--orange)">。</span></h1><p class="sub">30秒。脚は必死。顔は、いつもどおり。</p><div class="stage hero" id="titleArt"></div>
 <div class="levels" id="levels"></div><div class="card"><div class="row"><span class="label">TODAY'S WEIGHT</span><span class="sub" id="recommended"></span></div><div class="row"><button class="step" id="minus" aria-label="5kg減らす">−5</button><div><span class="weight" id="weightText">20</span> <span class="unit">kg</span></div><button class="step" id="plus" aria-label="5kg増やす">＋5</button></div><input id="weight" aria-label="使用重量" type="range" min="20" max="300" step="5" value="20"><div class="row"><span id="weightWarning" class="warning"></span><span class="sub" id="loadInfo"></span></div></div>
 <div class="row records"><span id="best"></span><span id="total"></span></div><p class="guide">足首・膝・股関節をまんべんなく連打。<br>背中・体幹もときどき押して、フォームを守ろう。</p><button id="start" class="primary">30秒、やってみる →</button><button id="reset" class="quiet">記録をリセット</button></section>
 <section id="play" class="screen" hidden><div class="row sub"><span>残り <b id="time">30.0</b> 秒</span><span id="phase">↓ しゃがむ</span></div><div class="timer"><i id="timebar"></i></div><div class="row score"><div><span class="rep" id="reps">0</span> <span class="label">REPS</span></div><div class="stats"><span id="playWeight"></span> kg<br><b id="tonnage">0</b> <span class="unit">kg TOTAL</span></div></div><div class="stage playstage" id="playArt"><div class="depth"><i id="depthbar"></i><span id="depthText"></span></div><div class="overlay" id="countdown"></div></div><div id="message" role="status" aria-live="polite"></div><div class="collapse" id="crushWrap"><div class="row"><span>潰れゲージ</span><span id="crushText"></span></div><progress id="crush" max="100" value="0"></progress></div><div class="controls"><div class="formbuttons"><button id="back" data-form="0">背中 <span id="backValue">100</span><div class="meter"><i id="backMeter"></i></div></button><button id="core" data-form="1">体幹 <span id="coreValue">100</span><div class="meter"><i id="coreMeter"></i></div></button></div><div class="joints"><button data-joint="0">足首<small></small></button><button data-joint="1">膝<small></small></button><button data-joint="2">股関節<small></small></button></div><div class="keyhint">A 足首　S 膝　D 股関節　/　J 背中　K 体幹</div></div></section>
-<section id="result" class="screen" hidden><h2 id="resultHeading">おつかれさま。</h2><p class="sub" id="resultStatus"></p><div class="stage hero" id="resultArt"></div><div style="text-align:center"><span class="resultrep" id="resultReps"></span> REPS<p id="resultTotal"></p><b id="newBest" style="color:var(--orange)"></b></div><div class="card xp" id="xp"></div><button id="retry" class="primary">もう一回 →</button><button id="choose" class="secondary">重量を選び直す</button></section><p class="save-note" id="saveNote" role="status"></p></div>
+<section id="result" class="screen" hidden><h2 id="resultHeading">おつかれさま。</h2><p class="sub" id="resultStatus"></p><div class="resultSummary"><span class="resultrep" id="resultReps"></span> REPS<p id="resultTotal"></p><b id="newBest" style="color:var(--orange)"></b></div><div class="resultActions"><button id="retry" class="primary">もう一回 →</button><button id="choose" class="secondary">重量を選び直す</button></div><div class="stage hero" id="resultArt"></div><div class="card xp" id="xp"></div></section><p class="save-note" id="saveNote" role="status"></p></div>
 <script>
 'use strict';
 // 試作v1の調整値。秒・kg・XPを基準とし、外部リソースは使用しない。
@@ -31,12 +32,12 @@ const levels=()=>record.xp.map(n=>1+Math.floor(n/CONFIG.xpPerLevel));
 const recommended=()=>Math.floor((CONFIG.recommendedBase+levels().reduce((s,l,i)=>s+(l-1)*CONFIG.recommendedGains[i],0))/CONFIG.weightStep)*CONFIG.weightStep;
 function loadFor(w){const r=w/recommended(),tier=CONFIG.loads.findIndex(l=>r<=l.max),load=CONFIG.loads[tier];return {...load,tier,r,n:CONFIG.baseN+Math.floor(w/CONFIG.nWeightDivisor)+load.extra};}
 function save(){try{localStorage.setItem(CONFIG.storageKey,JSON.stringify(record));$('saveNote').textContent='';}catch(e){$('saveNote').textContent='保存できませんでした。ブラウザの保存設定をご確認ください。';}}
-function show(v){view=v;document.body.classList.toggle('playing',v==='play');for(const id of ['title','play','result'])$(id).hidden=id!==v;}
+function show(v){view=v;if(v==='result')protectResultButtons();document.body.classList.toggle('playing',v==='play');for(const id of ['title','play','result'])$(id).hidden=id!==v;}
 function title(){show('title');$('levels').innerHTML=levels().map((l,i)=>`<div>${parts[i]}<b>Lv.${l}</b></div>`).join('');$('recommended').textContent=`推奨 ${recommended()} kg`;$('best').textContent=`自己ベスト ${record.best||'—'}${record.best?' kg':''}`;$('total').textContent=`累計 ${record.total} レップ`;weightUI();}
 function weightUI(){const l=loadFor(selected);$('weight').value=selected;$('weightText').textContent=selected;$('weightWarning').textContent=['適正。今日も、ぼちぼち。','重いかも','かなり重い','危険！潰れるかも'][l.tier];$('weightWarning').className='warning tone'+l.tier;$('loadInfo').textContent=`${l.label} · 各 ${l.n} 回`;$('minus').disabled=selected===CONFIG.minWeight;$('plus').disabled=selected===CONFIG.maxWeight;}
 function select(w){selected=Math.max(CONFIG.minWeight,Math.min(CONFIG.maxWeight,w));weightUI();}
 function pop(freq=450){if(muted)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const o=audio.createOscillator(),g=audio.createGain();o.frequency.setValueAtTime(freq,audio.currentTime);o.frequency.exponentialRampToValueAtTime(freq*.6,audio.currentTime+CONFIG.popSeconds);g.gain.setValueAtTime(CONFIG.popVolume,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+CONFIG.popSeconds);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+CONFIG.popSeconds);}catch(e){}}
-function start(){visualFailure=null;visualCrush=null;pop();game={weight:selected,load:loadFor(selected),state:'countdown',countdown:CONFIG.countdown,time:CONFIG.duration,reps:0,cleanReps:0,phase:'down',counts:[0,0,0],remainders:[0,0,0],form:[100,100],taps:[0,0],depth:0,crush:0,lock:0,failures:0,collapses:0,reason:'',ended:false};show('play');render();}
+function start(){motionState=null;visualFailure=null;visualCrush=null;pop();game={weight:selected,load:loadFor(selected),state:'countdown',countdown:CONFIG.countdown,time:CONFIG.duration,reps:0,cleanReps:0,phase:'down',counts:[0,0,0],remainders:[0,0,0],form:[100,100],taps:[0,0],depth:0,crush:0,lock:0,failures:0,collapses:0,reason:'',ended:false};show('play');render();}
 function resetRep(){game.phase='down';game.counts=[0,0,0];game.remainders=[0,0,0];game.depth=0;}
 function fail(reason){captureFailure(reason);game.lock=CONFIG.recoverySeconds;game.form=[CONFIG.recoveryForm,CONFIG.recoveryForm];game.reason=reason;game.failures++;if(reason==='フォーム崩壊！')game.collapses++;resetRep();pop(140);}
 function available(){return view==='play'&&game?.state==='playing'&&!game.lock&&game.time>0;}
@@ -48,6 +49,40 @@ function advance(dt){const g=game;if(view!=='play'||!g||g.ended)return;if(g.stat
 function finish(crushed){if(game.ended)return;const g=game;g.ended=true;g.state=crushed?'crushed':'finished';g.crushed=crushed;const before=levels(),gains=[g.reps*g.weight/CONFIG.legXPDivisor,g.taps[0]*CONFIG.formTapXP+g.cleanReps*CONFIG.cleanRepXP,g.taps[1]*CONFIG.formTapXP+g.cleanReps*CONFIG.cleanRepXP];const best=g.reps>0&&g.weight>record.best;record.xp=record.xp.map((n,i)=>Math.round((n+gains[i])*1000)/1000);record.total+=g.reps;if(best)record.best=g.weight;save();$('resultHeading').textContent=crushed?'潰れた…':'おつかれさま。';$('resultStatus').textContent=crushed?'顔だけは、いつもどおり。':'30秒、よくがんばりました。';$('resultReps').textContent=g.reps;$('resultTotal').textContent=`${g.weight} kg × ${g.reps} 回 = ${g.weight*g.reps} kg`;$('newBest').textContent=best?'自己ベスト更新！':'';$('xp').innerHTML=gains.map((xp,i)=>`<div class="row"><span>${parts[i]} +${Number(xp.toFixed(1))} XP</span><b>${levels()[i]>before[i]?`Lv.${before[i]} → ${levels()[i]} ↑`:`Lv.${levels()[i]}`}</b></div>`).join('');show('result');draw($('resultArt'),g,performance.now());}
 // 描画専用。既存CONFIG、ゲーム状態、保存データを変更しない。
 // 失敗の1.5秒はgame.lockに同期。最後の30%を滑り戻りと起き上がりに使う。
+// 時間を持つのは描画と結果UIだけ。game/CONFIG/localStorageには書き込まない。
+const PRESENTATION = { gain:1.4, resultGuardMs:800, delayMs:[0,32,68], springHz:20 };
+let motionState=null, resultReadyAt=0, resultGuardTimer;
+const resultPointerReady=new WeakMap();
+function resultButtonsReady(){return view==='result'&&performance.now()>=resultReadyAt;}
+function refreshResultButtons(){for(const id of ['retry','choose'])$(id).disabled=!resultButtonsReady();}
+function protectResultButtons(){
+ resultReadyAt=performance.now()+PRESENTATION.resultGuardMs;
+ clearTimeout(resultGuardTimer);refreshResultButtons();
+ resultGuardTimer=setTimeout(refreshResultButtons,PRESENTATION.resultGuardMs+1);
+}
+function motionPose(g,t){
+ if(!g)return null;
+ if(motionState?.owner!==g){motionState={owner:g,last:t,history:[{t:t-1000,depth:0}],target:0,phase:g.phase,reps:g.reps,upAt:-Infinity,repAt:-Infinity,channels:[0,0,0].map(()=>({x:0,v:0}))};}
+ const m=motionState,dt=Math.max(0,Math.min(.1,(t-m.last)/1000));m.last=t;
+ if(g.phase!==m.phase){if(g.phase==='up')m.upAt=t;m.phase=g.phase;}
+ if(g.reps!==m.reps){m.repAt=t;m.reps=g.reps;}
+ if(m.target!==g.depth){m.target=g.depth;m.history.push({t,depth:g.depth/100});}
+ m.history=m.history.filter((h,i,a)=>i===a.length-1||a[i+1].t>t-1000);
+ const anticipation=(t-m.upAt)/1000;
+ for(let i=0;i<3;i++){
+  const delayed=t-PRESENTATION.delayMs[i];let target=m.history[0].depth;
+  for(const h of m.history){if(h.t>delayed)break;target=h.depth;}
+  // 立つ直前にほんの少し沈み込む。追従はばねの解析解で、フレームレートに依存しない。
+  if(anticipation>=0&&anticipation<.16)target=Math.max(target,1)+.055*Math.sin(Math.PI*anticipation/.16);
+  const s=m.channels[i],w=PRESENTATION.springHz,decay=Math.exp(-w*dt),error=s.x-target,c=s.v+w*error;
+  s.x=target+(error+c*dt)*decay;s.v=(s.v-w*c*dt)*decay;
+ }
+ const sinceRep=(t-m.repAt)/1000;
+ // 伸び切りの小さな行き過ぎ→減衰して着地。足裏の接地点は固定する。
+ const rebound=sinceRep>=0&&sinceRep<.55?Math.sin(sinceRep*19)*Math.exp(-sinceRep*8)*5:0;
+ return {hip:m.channels[0].x,knee:m.channels[1].x,torso:m.channels[2].x,rebound};
+}
+
 const VISUAL = { floor:282, recoveryStart:.70, popStart:.90, crushSeconds:1.1 };
 let visualFailure=null, visualCrush=null, visualSerial=0;
 const clamp01=n=>Math.max(0,Math.min(1,n));
@@ -58,35 +93,43 @@ const xy=p=>`${p.x} ${p.y}`;
 const WARNING_TEXT=['足首だけ曲がってかかとが浮いてる！','膝だけ前に出てる！','股関節だけ後ろに逃げてる！'];
 function warningText(counts){const max=Math.max(...counts);return WARNING_TEXT[counts.indexOf(max)];}
 function captureFailure(reason){
+ motionState=null;
  const g=game;
  visualFailure={owner:g,kind:reason==='転倒！'?['ankle','knee','hip'][g.counts.indexOf(Math.max(...g.counts))]:g.form[0]<=0?'back':'core',
   snapshot:{depth:g.depth,form:[...g.form],counts:[...g.counts],load:g.load}};
 }
-function sidePose(g,t){
+function sidePose(g,t,motion=null){
  const d=(g?.depth||0)/100,b=1-(g?.form[0]??100)/100,c=1-(g?.form[1]??100)/100;
+ const dh=motion?.hip??d,dk=motion?.knee??d,ds=motion?.torso??d;
+ const breathing=Math.sin(t/710)*1.8*(1-d*.7),rebound=motion?.rebound||0;
  const counts=g?.counts||[0,0,0],min=Math.min(...counts);
  // 生カウントの偏り3〜5をそれぞれ1/3〜1の見た目に写す。複数先行も独立して変形。
- const a=counts.map(n=>n-min>=CONFIG.warningGap?clamp01((n-min-CONFIG.warningGap+1)/(CONFIG.fallGap-CONFIG.warningGap)):0);
+ const a=counts.map(n=>n-min>=CONFIG.warningGap?PRESENTATION.gain*clamp01((n-min-CONFIG.warningGap+1)/(CONFIG.fallGap-CONFIG.warningGap)):0);
  const tier=g?.load?.tier||0;
  const amplitude=(tier===3?3.8:tier===2?2:tier===1&&Math.sin(t/430)>.65?1:0)+Math.min(b,c)*1.6;
  const tremor=Math.sin(t/28)*amplitude,heel=a[0]*23;
- const hip=point(236+d*31+a[2]*35+c*18,218+d*28-c*13);
- const knee=point(225-d*40-a[1]*52+tremor,248-d*3-heel*.25);
+ const hip=point(236+dh*14+a[2]*35-a[1]*9+c*18*PRESENTATION.gain,218+dh*28-c*13*PRESENTATION.gain-breathing-rebound);
  const ankle=point(228,270-heel);
- const shoulder=point(223-d*28-a[2]*54-b*27+c*23-a[0]*7,155+d*41+b*29-c*18-heel*.18);
+ // 2節の脚を足首から解く。深くなるほど脚の長さが伸びる線形配置を避ける。
+ // 膝の追従には骨盤より遅いdkを使い、先行時だけ軟らかい誇張を加える。
+ const kneeHip=point(236+dk*14+a[2]*35-a[1]*9+c*18*PRESENTATION.gain,218+dk*28-c*13*PRESENTATION.gain-breathing-rebound);
+ const dx=ankle.x-kneeHip.x,dy=ankle.y-kneeHip.y,distance=Math.max(1,Math.hypot(dx,dy));
+ const bone=Math.max(30,distance/2+.5),bend=Math.sqrt(Math.max(0,bone*bone-distance*distance/4));
+ const knee=point((kneeHip.x+ankle.x)/2-dy/distance*bend-a[1]*18+tremor,(kneeHip.y+ankle.y)/2+dx/distance*bend);
+ const shoulder=point(223-ds*28-a[2]*54-b*27*PRESENTATION.gain+c*23*PRESENTATION.gain-a[0]*7,155+ds*41+b*29*PRESENTATION.gain-c*18*PRESENTATION.gain-heel*.18-breathing-rebound);
  const head=point(shoulder.x-16-b*7+c*13,shoulder.y-36+b*8-c*5);
  // 背中低下は上部を背中側へ、体幹低下は下部を腹側へ。両方ならS字が残る。
- const upper=point(shoulder.x+34+b*49+c*8,shoulder.y+17-b*55);
+ const upper=point(shoulder.x+34+b*49*PRESENTATION.gain+c*8,shoulder.y+17-b*55*PRESENTATION.gain);
  const lower=point(hip.x+31+b*8-c*65,hip.y-25);
  return {hip,knee,ankle,shoulder,head,upper,lower,heel,b,c,tremor,
-  headAngle:10*d+17*b-19*c, belly:point(hip.x-41-c*26,hip.y-18+c*22)};
+  headAngle:2*ds+17*b-19*c, tailAngle:-19*dh+Math.sin(t/490)*2.5,earSwing:Math.sin(t/620)*2,footRoll:Math.min(3,Math.max(-1,dh-ds)*25)+Math.sin(dh*Math.PI)*2, belly:point(hip.x-41-c*26,hip.y-18+c*22)};
 }
-function faceMarkup(x,y,angle=0){
+function faceMarkup(x,y,angle=0,earSwing=0){
  // すべての状態で同じ半目と小さな口。驚き顔への差し替えはしない。
  return `<g data-face="half-lidded" transform="translate(${x} ${y}) rotate(${angle})">
- <path d="M3-23L17-38 25-15Z" fill="#b77d41"/>
+ <path transform="rotate(${earSwing} 12 -21)" d="M3-23L17-38 25-15Z" fill="#b77d41"/>
  <path d="M-17-18 L-16-42 4-27 Q19-31 29-14 Q38 9 16 25 Q-4 34-24 20 L-40 10 Q-45 2-32-3Z" fill="#d9954c"/>
- <path d="M-15-29l1-7 9 10" fill="#b67840" stroke="none"/>
+ <path transform="rotate(${-earSwing} -10 -23)" d="M-15-29l1-7 9 10" fill="#b67840" stroke="none"/>
  <path d="M-29-2 Q-17 1-9-8 Q-4 7 13 15 L16 25 Q-5 33-24 20 L-40 10 Q-45 2-29-2Z" fill="#f7e5be" stroke="none"/>
  <path d="M-39 2q-8-1-6 5l6 2 4-4Z" fill="#4f4032" stroke="none"/>
  <path d="M-19-5q6 7 12 0" fill="#4f4032" stroke="none"/>
@@ -94,8 +137,8 @@ function faceMarkup(x,y,angle=0){
  <path d="M-30 15q4 2 7 0" fill="none" stroke-width="2"/>
  </g>`;
 }
-function tailMarkup(x,y,flatten=1){
- return `<g data-part="curled-tail" transform="translate(${x} ${y}) scale(${flatten} 1)"><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#594431" stroke-width="17"/><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#d9954c" stroke-width="10"/></g>`;
+function tailMarkup(x,y,flatten=1,angle=0){
+ return `<g data-part="curled-tail" transform="translate(${x} ${y}) rotate(${angle}) scale(${flatten} 1)"><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#594431" stroke-width="17"/><path d="M7-6 C49 6 61-41 34-42 C11-43 14-16 32-20 C43-23 36-34 29-29" fill="none" stroke="#d9954c" stroke-width="10"/></g>`;
 }
 function plateMarkup(x,y,r=24,rotation=0){
  return `<g transform="translate(${x} ${y}) rotate(${rotation})" data-part="plate"><circle r="${r}" fill="#486b57" stroke="#2b4438" stroke-width="4"/><circle r="${r-7}" fill="none" stroke="#77947c" stroke-width="2"/><path d="M0-${r-5}v8M0 ${r-5}v-8M-${r-5} 0h8M${r-5} 0h-8" stroke="#77947c" stroke-width="2"/><circle r="4" fill="#e4d9b9" stroke="#2b4438" stroke-width="2"/></g>`;
@@ -111,20 +154,20 @@ function dogMarkup(p,{tailFlatten=1}={}){
  const both=Math.min(p.b,p.c),mid=point((h.x+s.x)/2+26+p.b*18,(h.y+s.y)/2-p.b*9);
  const spine=`M${h.x+18} ${h.y+5} C${h.x+45-p.c*60} ${h.y-7} ${h.x+20-p.c*72} ${h.y-30} ${xy(mid)} C${mid.x+both*45} ${mid.y-12} ${xy(u)} ${s.x+18} ${s.y-5}`;
  const body=`${spine} Q${s.x-3} ${s.y-20} ${s.x-24} ${s.y+5} C${s.x-37-p.c*24} ${s.y+38+p.c*24} ${xy(p.belly)} ${h.x-22} ${h.y+9} Q${h.x} ${h.y+25} ${h.x+18} ${h.y+5}Z`;
- const leg=(dx,dy,color)=>`<g transform="translate(${dx} ${dy})"><path d="M${xy(h)}L${xy(k)}L${xy(a)}" fill="none" stroke="#594431" stroke-width="23"/><path d="M${xy(h)}L${xy(k)}L${xy(a)}" fill="none" stroke="${color}" stroke-width="15"/><path d="M198 280Q197 272 210 273L230 ${279-p.heel}Q238 ${280-p.heel} 235 ${284-p.heel}L204 284Z" fill="${color}"/></g>`;
+ const leg=(dx,dy,color)=>`<g transform="translate(${dx} ${dy})"><path d="M${xy(h)}L${xy(k)}L${xy(a)}" fill="none" stroke="#594431" stroke-width="23"/><path d="M${xy(h)}L${xy(k)}L${xy(a)}" fill="none" stroke="${color}" stroke-width="15"/><path transform="rotate(${-p.footRoll||0} 201 282)" d="M198 280Q197 272 210 273L230 ${279-p.heel}Q238 ${280-p.heel} 235 ${284-p.heel}L204 284Z" fill="${color}"/></g>`;
  return `<g data-part="dog">
- ${tailMarkup(h.x+12,h.y-8,tailFlatten)}${leg(10,-3,'#b27b43')}
+ ${tailMarkup(h.x+12,h.y-8,tailFlatten,p.tailAngle||0)}${leg(10,-3,'#b27b43')}
  <defs><clipPath id="${clip}"><path d="${body}"/></clipPath></defs><path data-part="spine" d="${body}" fill="#d9954c"/>
  <path clip-path="url(#${clip})" d="M${s.x-22} ${s.y+6} Q${s.x-10} ${s.y+21} ${s.x-19-p.c*23} ${s.y+40+p.c*16} Q${h.x-40-p.c*24} ${h.y+12} ${h.x-15} ${h.y+12} Q${h.x-1} ${h.y-7} ${s.x-22} ${s.y+6}" fill="#f7e5be" stroke="none"/>
  <path data-part="back-curve" d="${spine}" fill="none" stroke="#80562e" stroke-width="4"/>
  ${leg(0,0,'#dda05c')}
  <path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${s.x+27} ${s.y-2}" fill="none" stroke="#594431" stroke-width="17"/><path d="M${s.x-8} ${s.y+7} Q${s.x-27} ${s.y+30} ${s.x+8} ${s.y+23} L${s.x+27} ${s.y-2}" fill="none" stroke="#e4a665" stroke-width="10"/>
- ${faceMarkup(head.x,head.y,p.headAngle)}
+ ${faceMarkup(head.x,head.y,p.headAngle,p.earSwing||0)}
  </g>`;
 }
 function dustMarkup(x,y,amount){
  if(amount<=0)return '';
- return `<g data-effect="dust" fill="#ccbfa0" stroke="none" opacity="${(1-amount)*.8}">${[-1,0,1].map((n,i)=>`<ellipse cx="${x+n*amount*48}" cy="${y-amount*(13+i*4)}" rx="${5+amount*13}" ry="${3+amount*8}"/>`).join('')}</g>`;
+ return `<g data-effect="dust" fill="#ccbfa0" stroke="none" opacity="${(1-amount)*.9}">${[-1,0,1].map((n,i)=>`<ellipse cx="${x+n*amount*67}" cy="${y-amount*(13+i*4)}" rx="${7+amount*18}" ry="${4+amount*11}"/>`).join('')}</g>`;
 }
 function ballMarkup(rotation){
  return `<g data-pose="ball" transform="translate(230 243) rotate(${rotation})"><circle r="38" fill="#d9954c"/><path d="M-19 4Q-5-15 16-9Q32 9 8 27Q-13 33-19 4" fill="#f7e5be" stroke="none"/><path d="M20-18C39-19 33 5 20 1C9-3 17-13 23-8" fill="none" stroke-width="6"/><path d="M12 21q-12-10-17 1" fill="none" stroke-width="7"/><g transform="translate(-4 -2) scale(.73)">${faceMarkup(0,0,-12)}</g></g>`;
@@ -133,11 +176,11 @@ function bellyMarkup(){
  return `<g data-pose="belly-slide">${tailMarkup(257,251,.75)}<path d="M148 227Q201 203 257 235L273 261Q205 281 146 267Z" fill="#d9954c"/><path d="M150 251Q205 264 267 253L273 265Q205 283 148 268Z" fill="#f7e5be" stroke="none"/><path d="M244 246l30 7 10 20h-24m-94-19-20 15h-17" fill="none" stroke="#594431" stroke-width="17"/><path d="M244 246l30 7 10 20h-24m-94-19-20 15h-17" fill="none" stroke="#dda05c" stroke-width="10"/>${faceMarkup(125,247,-8)}</g>`;
 }
 function bridgeMarkup(arch=1){
- const top=264-arch*96;
+ const top=264-arch*125;
  return `<g data-pose="bridge">${tailMarkup(268,259,.6)}<path d="M119 271C117 ${top} 264 ${top-16} 276 272L250 274C241 ${top+46} 155 ${top+45} 145 276Z" fill="#d9954c"/><path d="M120 262C132 ${top-3} 256 ${top-6} 272 263L258 261C242 ${top+23} 151 ${top+26} 135 264Z" fill="#f7e5be" stroke="none"/><path d="M142 262l-12 17h-20m147-18 12 18h17" fill="none" stroke="#594431" stroke-width="16"/><path d="M142 262l-12 17h-20m147-18 12 18h17" fill="none" stroke="#dda05c" stroke-width="9"/>${faceMarkup(113,253,-22)}</g>`;
 }
 function failureScene(f,g,t){
- const q=clamp01(1-g.lock/CONFIG.recoverySeconds),wind=ease(q/.18),stunt=ease((q-.18)/.40);
+ const q=clamp01(1-g.lock/CONFIG.recoverySeconds),wind=ease(q/.18),stunt=1-Math.pow(1-clamp01((q-.18)/.40),2.6);
  const returning=ease((q-VISUAL.recoveryStart)/(VISUAL.popStart-VISUAL.recoveryStart));
  const pop=ease((q-VISUAL.popStart)/(1-VISUAL.popStart));
  const popDog=p=>`<g transform="translate(0 ${282-10*Math.sin(Math.PI*pop)}) scale(1 ${.3+.7*pop}) translate(0 -282)">${dogMarkup(p)}</g>`;
@@ -147,9 +190,11 @@ function failureScene(f,g,t){
  const blendPose=(a,b,n)=>Object.fromEntries(Object.keys(a).map(k=>[k,typeof a[k]==='number'?mix(a[k],b[k],n):point(mix(a[k].x,b[k].x,n),mix(a[k].y,b[k].y,n))]));
  if(f.kind==='hip'||f.kind==='ankle'){
   const back=f.kind==='ankle',p=blendPose(source,standing,wind);
-  const angle=(back?80:-80)*stunt*(1-pop),lift=back?25*Math.sin(Math.PI*ease(q/.58))*(1-pop):0;
-  const slide=(back?-55:95)*returning*(1-pop),pivot=back?226:200;
-  transform=`translate(${slide} ${-lift-10*Math.sin(Math.PI*pop)}) rotate(${angle} ${pivot} 282)`;
+  const angle=(back?80:-80)*stunt*(1-pop),lift=back?35*Math.sin(Math.PI*ease(q/.58))*(1-pop):0;
+  const slide=(back?-74:112)*returning*(1-pop),pivot=back?226:200;
+  const impact=q>.56&&q<.70?-9*Math.sin((q-.56)/.14*Math.PI):0;
+  const windup=-Math.sin(Math.PI*wind)*5*(1-stunt);
+  transform=`translate(${slide} ${-lift+impact-14*Math.sin(Math.PI*pop)}) rotate(${angle+windup} ${pivot} 282)`;
   dog=`<g transform="${transform}">${dogMarkup(p,{tailFlatten:back&&stunt>.8?.18:1})}</g>`;
   bar=`<g transform="${transform}">${barMarkup(p,{detached:!back&&q>.44&&q<.91})}</g>`;
   if(!back&&q>.44&&q<.91){
@@ -166,14 +211,14 @@ function failureScene(f,g,t){
   }
   effects+=dustMarkup(back?355:42,281,clamp01((q-.53)/.25));
  }else if(f.kind==='knee'){
-  const slide=-57*stunt*(1-returning),bounce=-6*Math.sin(Math.PI*pop);
-  const windPose={...source,knee:point(source.knee.x-16*wind,source.knee.y)};
+  const slide=-79*stunt*(1-returning),bounce=-9*Math.sin(Math.PI*pop)-(q>.49&&q<.66?7*Math.sin((q-.49)/.17*Math.PI):0);
+  const windPose={...source,knee:point(source.knee.x-8*wind,source.knee.y)};
   dog=`<g transform="translate(${slide} ${bounce})">${q<.18?dogMarkup(windPose):(q<VISUAL.popStart?bellyMarkup():popDog(standing))}</g>`;
   const p=blendPose(source,{...standing,shoulder:point(169,240)},wind);
   bar=`<g transform="translate(${slide} ${bounce})">${barMarkup(q<.18?windPose:blendPose(p,standing,pop))}</g>`;
   effects=dustMarkup(245+slide,281,clamp01((q-.4)/.35));
  }else if(f.kind==='back'){
-  const roll=-72*stunt*(1-returning),rotation=-360*stunt;
+  const roll=-101*stunt*(1-returning),rotation=-360*stunt;
   dog=`<g transform="translate(${roll} ${-10*Math.sin(Math.PI*pop)})">${q<.18?`<g opacity="${1-wind}">${dogMarkup(source)}</g><g opacity="${wind}">${ballMarkup(0)}</g>`:(q<VISUAL.popStart?ballMarkup(rotation):popDog(standing))}</g>`;
   const p=blendPose(source,{...standing,shoulder:point(233,228)},wind);
   bar=`<g transform="translate(${roll} 0)">${barMarkup(blendPose(p,standing,pop))}</g>`;
@@ -181,8 +226,8 @@ function failureScene(f,g,t){
  }else{
   // 反り切ったブリッジを保持→崩落→バウンド。腹のクリーム色が天井を向く。
   const arch=1-ease((q-.43)/.16),squash=1-.7*ease((q-.48)/.12);
-  const bounce=q>.59&&q<.70?-12*Math.sin((q-.59)/.11*Math.PI):0;
-  const slide=38*stunt*(1-returning),sy=mix(squash,1,pop);
+  const bounce=q>.59&&q<.70?-17*Math.sin((q-.59)/.11*Math.PI):0;
+  const slide=53*stunt*(1-returning),sy=mix(squash,1,pop);
   dog=`<g transform="translate(${slide} ${282+bounce}) scale(1 ${sy}) translate(0 -282)">${q<.18?`<g opacity="${1-wind}">${dogMarkup(source)}</g><g opacity="${wind}">${bridgeMarkup()}</g>`:(q<VISUAL.popStart?bridgeMarkup(arch):dogMarkup(standing))}</g>`;
   const p=blendPose(source,{...standing,shoulder:point(190,239)},wind);
   bar=`<g transform="translate(${slide} ${bounce+(1-sy)*30})">${barMarkup(blendPose(p,standing,pop))}</g>`;
@@ -191,9 +236,9 @@ function failureScene(f,g,t){
  return {markup:dog+bar+effects,label:`failure-${label}`,progress:q};
 }
 function crushedScene(t){
- const q=clamp01((t-visualCrush.started)/(VISUAL.crushSeconds*1000)),slide=38*ease(q);
+ const q=clamp01((t-visualCrush.started)/(VISUAL.crushSeconds*1000)),slide=53*(1-Math.pow(1-q,3));
  if(q>=1)visualCrush.complete=true;
- const p=sidePose(null,t),bounce=-Math.abs(Math.sin(q*Math.PI*2))*24*(1-q);
+ const p=sidePose(null,t),bounce=-Math.abs(Math.sin(q*Math.PI*2))*33*(1-q);
  return {label:'paper-slide',progress:q,markup:`<g data-pose="paper" transform="translate(${slide-22} 282) scale(1.12 .035) translate(0 -282)">${dogMarkup(p)}</g><g transform="translate(${slide} ${bounce})">${barMarkup({...p,shoulder:point(215,254)})}</g>`};
 }
 function draw(el,g,t){
@@ -202,18 +247,26 @@ function draw(el,g,t){
   if(visualCrush?.owner!==g)visualCrush={owner:g,started:t};
   scene=crushedScene(t);
  }else if(g?.lock>0&&visualFailure?.owner===g)scene=failureScene(visualFailure,g,t);
- else {const p=sidePose(g,t);scene={label:'squat',markup:dogMarkup(p)+barMarkup(p)};}
+ else {const p=sidePose(g,t,motionPose(g,t));const shake=g?.load.tier>0?p.tremor*.45:0;scene={label:'squat',markup:`<g transform="translate(${shake} ${Math.sin(t/19)*Math.abs(shake)*.45})">${dogMarkup(p)+barMarkup(p)}</g>`};}
  let svg=el.querySelector('svg');
  if(!svg){el.insertAdjacentHTML('afterbegin','<svg viewBox="0 0 420 320" role="img" aria-label="半目の犬の横向きスクワット"><g data-layer="scene"></g></svg>');svg=el.querySelector('svg');}
+
  svg.setAttribute('data-pose',scene.label);
  svg.setAttribute('aria-label',`半目の犬：${g?.crushed?'紙のように潰れて滑る':g?.lock>0?'転倒・崩壊から復帰中':'横向きバーベルスクワット'}`);
- svg.querySelector('[data-layer="scene"]').innerHTML=`<ellipse cx="226" cy="287" rx="137" ry="7" fill="#dfe2d2"/><path d="M21 285H399" stroke="#b7c5ae" stroke-width="2"/><g stroke="#594431" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${scene.markup}</g>`;
+ svg.querySelector('[data-layer="scene"]').innerHTML=`<ellipse cx="226" cy="287" rx="137" ry="7" fill="#dfe2d2"/><path d="M21 285H399" stroke="#b7c5ae" stroke-width="2"/><g data-actor="true" stroke="#594431" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${scene.markup}</g>`;
+ // 体と演出の実寸に余白を加えたカメラ。拡大しても耳・尾・転倒の端を切らない。
+ const bounds=svg.querySelector('[data-actor]').getBBox();
+ const failureCamera=g?.lock>0||g?.crushed;
+ const cameraWidth=failureCamera?Math.max(265,bounds.width+26):Math.max(310,2*Math.max(230-bounds.x,bounds.x+bounds.width-230)+26);
+ const cameraHeight=failureCamera?Math.max(235,bounds.height+22):Math.max(255,306-bounds.y);
+ const cameraX=failureCamera?bounds.x+bounds.width/2-cameraWidth/2:230-cameraWidth/2;
+ svg.setAttribute('viewBox',`${cameraX} ${Math.min(bounds.y-11,Math.max(295,bounds.y+bounds.height+11)-cameraHeight)} ${cameraWidth} ${cameraHeight}`);
 }
 function render(){if(!game)return;const g=game;$('time').textContent=g.time.toFixed(1);$('timebar').style.width=g.time/CONFIG.duration*100+'%';$('reps').textContent=g.reps;$('playWeight').textContent=g.weight;$('tonnage').textContent=g.reps*g.weight;$('phase').textContent=g.phase==='down'?'↓ しゃがむ':'↑ 立ち上がる';$('countdown').textContent=g.state==='countdown'?Math.ceil(g.countdown):'';$('depthbar').style.height=g.depth+'%';$('depthText').textContent=`深さ ${Math.round(g.depth)}%`;const gap=Math.max(...g.counts)-Math.min(...g.counts),max=Math.max(...g.counts);$('message').textContent=g.lock?`${g.reason} 立て直し中…`:gap>=CONFIG.warningGap?warningText(g.counts):g.state==='countdown'?'準備はいい？':g.phase==='down'?'まんべんなく、しゃがもう':'その調子、立ち上がろう';for(let i=0;i<2;i++){const id=i?'core':'back';$(id+'Value').textContent=Math.ceil(g.form[i]);$(id+'Meter').style.width=g.form[i]+'%';$(id+'Meter').style.background=g.form[i]>60?'#548566':g.form[i]>30?'#d4a146':'#c84e44';}document.querySelectorAll('[data-joint]').forEach((btn,i)=>{btn.querySelector('small').textContent=`${g.counts[i]} / ${g.load.n}${g.load.taps>1?` · ${g.remainders[i]}/${g.load.taps}打`:''}`;btn.classList.toggle('ahead',gap>=CONFIG.warningGap&&g.counts[i]===max);btn.disabled=!available();});document.querySelectorAll('[data-form]').forEach(b=>b.disabled=!available());$('crushWrap').style.visibility=g.load.tier>=2?'visible':'hidden';$('crush').value=g.crush;$('crushText').textContent=Math.round(g.crush)+'%';}
-$('start').onclick=start;$('retry').onclick=start;$('choose').onclick=title;$('minus').onclick=()=>select(selected-CONFIG.weightStep);$('plus').onclick=()=>select(selected+CONFIG.weightStep);$('weight').oninput=e=>select(Number(e.target.value));$('mute').onclick=()=>{muted=!muted;$('mute').textContent=muted?'音 OFF':'音 ON';$('mute').setAttribute('aria-pressed',String(muted));};$('reset').onclick=()=>{if(confirm('レベル・自己ベスト・累計レップをすべてリセットしますか？')){record=fresh();save();title();}};
+$('start').onclick=start;for(const [id,action] of [['retry',start],['choose',title]]){const btn=$(id);btn.addEventListener('pointerdown',()=>resultPointerReady.set(btn,resultButtonsReady()));btn.onclick=e=>{if(!resultButtonsReady()||(e.detail>0&&!resultPointerReady.get(btn)))return;resultPointerReady.delete(btn);action();};}$('minus').onclick=()=>select(selected-CONFIG.weightStep);$('plus').onclick=()=>select(selected+CONFIG.weightStep);$('weight').oninput=e=>select(Number(e.target.value));$('mute').onclick=()=>{muted=!muted;$('mute').textContent=muted?'音 OFF':'音 ON';$('mute').setAttribute('aria-pressed',String(muted));};$('reset').onclick=()=>{if(confirm('レベル・自己ベスト・累計レップをすべてリセットしますか？')){record=fresh();save();title();}};
 // pointerdownだけで1入力。互換clickによる二重カウントを防ぎ、キーボードのボタン操作も維持。
 for(const btn of document.querySelectorAll('[data-joint],[data-form]')){const act=()=>btn.dataset.joint!==undefined?joint(Number(btn.dataset.joint)):form(Number(btn.dataset.form));btn.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();act();});btn.addEventListener('click',e=>{if(e.detail===0)act();});}
 document.addEventListener('keydown',e=>{if(view!=='play'||e.repeat||e.ctrlKey||e.metaKey||e.altKey)return;const key=e.key.toLowerCase(),i=['a','s','d'].indexOf(key);if(i>=0){e.preventDefault();joint(i);}if(key==='j'||key==='k'){e.preventDefault();form(key==='j'?0:1);}});
 // 実時間を使うのでバックグラウンド移行でも30秒の時計は止まらない。
-function frame(now){let dt=(now-last)/1000;last=now;while(dt>0&&view==='play'&&!game.ended){const step=Math.min(dt,.05);advance(step);dt-=step;}if(view==='play'){render();draw($('playArt'),game,now);}if(view==='result'&&game?.crushed&&!visualCrush?.complete)draw($('resultArt'),game,now);requestAnimationFrame(frame);}title();draw($('titleArt'),null,0);requestAnimationFrame(frame);
+function frame(now){let dt=(now-last)/1000;last=now;while(dt>0&&view==='play'&&!game.ended){const step=Math.min(dt,.05);advance(step);dt-=step;}if(view==='play'){render();draw($('playArt'),game,now);}if(view==='title')draw($('titleArt'),null,now);if(view==='result'){refreshResultButtons();if(!game?.crushed||!visualCrush?.complete)draw($('resultArt'),game,now);}requestAnimationFrame(frame);}title();draw($('titleArt'),null,0);requestAnimationFrame(frame);
 </script></html>
