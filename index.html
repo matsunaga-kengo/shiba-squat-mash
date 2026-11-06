@@ -185,25 +185,25 @@ function tailMarkup(x,y,flatten=1,angle=0){
 }
 // 描画専用。重量から決まる同じお盆・同じ岩配置を毎回使う（乱数なし）。
 function loadStyle(weight){
- // 表示用の岩数。ゲームの必要回数Nとは無関係。
- const stoneCount=2+Math.floor((weight-20)/20),radius=12,capacities=[5,4,3,2,1,1],spacing=radius*1.65;
+ // 岩の総数だけを重量kgと一致させる。ゲームの必要回数Nとは無関係。
+ const stoneCount=weight,radius=5.5,baseCount=Math.ceil((Math.sqrt(1+8*stoneCount)-1)/2),spacing=radius*1.65;
  const rocks=[];let left=stoneCount,rows=0;
  for(let row=0;left>0;row++){
-  const count=Math.min(capacities[row],left);
-  for(let col=0;col<count;col++)rocks.push({x:14+radius+Math.min(row,4)*radius*1.8+Math.max(0,row-4)*radius*.3+col*spacing,y:-radius-row*radius*1.55,
-   radius:weight>=250&&rocks.length===stoneCount-1?radius*1.6:radius,seed:(row*7+col*3)%4,row});
+  const count=Math.min(baseCount-row,left);
+  for(let col=0;col<count;col++)rocks.push({x:14+radius+row*spacing*.5+col*spacing,y:-radius-row*radius*1.55,
+   radius,seed:(row*7+col*3)%4,row});
   left-=count;rows++;
  }
- const baseCount=Math.min(capacities[0],stoneCount),width=14+(baseCount-1)*spacing+2*radius+10;
+ const width=14+(baseCount-1)*spacing+2*radius+10;
  return {radius,rows,baseCount,width,rocks,top:rocks[rocks.length-1],height:Math.max(...rocks.map(s=>-s.y+s.radius))};
 }
 function rockMarkup(x,y,radius,rotation=0,seed=0){
  const colors=['#999184','#aaa294','#7f7c72','#918d83'];
  return `<g data-part="rock" data-radius="${radius}" data-seed="${seed}" transform="translate(${x} ${y}) rotate(${rotation}) scale(${radius})">
- <path d="M-.88 .2Q-.95-.15-.72-.52L-.3-.9Q-.1-1 .24-.88L.68-.62Q.88-.42 .94-.05L.86 .5Q.75 .8 .5 .86Q.25 1 0 1Q-.3 1-.64 .74Q-.9 .52-.88 .2Z" fill="${colors[seed%4]}" stroke="#5e5b52" stroke-width="${2/radius}"/>
+ <path d="M-.88 .2Q-.95-.15-.72-.52L-.3-.9Q-.1-1 .24-.88L.68-.62Q.88-.42 .94-.05L.86 .5Q.75 .8 .5 .86Q.25 1 0 1Q-.3 1-.64 .74Q-.9 .52-.88 .2Z" fill="${colors[seed%4]}" stroke="#5e5b52" stroke-width="${Math.min(2,radius*.22)/radius}"/>
  <path d="M-.72-.5L-.3-.9 .24-.88 .65-.59 .1-.38Z" fill="#d6cfc1" opacity=".75" stroke="none"/>
  <path d="M-.64 .65L-.08 .4 .78 .38 .5 .86Q.25 1 0 1Q-.3 1-.64 .74Z" fill="#615f56" opacity=".34" stroke="none"/>
- <path d="M-.27-.22L-.04 .12 .3 .04M.52-.22L.42 .02" fill="none" stroke="#69665d" stroke-width="${1/radius}"/>
+ <path d="M-.27-.22L-.04 .12 .3 .04M.52-.22L.42 .02" fill="none" stroke="#69665d" stroke-width="${Math.min(1,radius*.12)/radius}"/>
  </g>`;
 }
 function trayMarkup(width){
@@ -352,7 +352,9 @@ function crushedScene(t){
  const remaining={...p,loadContact:point(mix(m.contact.x,200+slide*.4,settle),mix(m.contact.y,270,settle)),loadAngle:mix(m.angle,0,settle)};
  let scattered='';
  style.rocks.slice(keep).forEach((stone,j)=>{
-  const start=m.project(stone.x,stone.y),u=clamp01((q-.05-j*.018)/.72),drift=1-Math.pow(1-u,3);
+  // 岩が300個でも従来の演出時間内に雪崩が完了するよう、開始のずれだけを圧縮。
+  const delay=j*.018*Math.min(1,7/Math.max(1,style.rocks.length-keep-1));
+  const start=m.project(stone.x,stone.y),u=clamp01((q-.05-delay)/.72),drift=1-Math.pow(1-u,3);
   const floorY=285-stone.radius-1,targetX=58+(j*47)%330;
   const impact=clamp01((u-.72)/.28);
   const y=u<.72?mix(start.y,floorY,Math.pow(u/.72,2)):floorY-Math.abs(Math.sin(impact*Math.PI*2))*(1-impact)*8;
