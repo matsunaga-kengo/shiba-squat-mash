@@ -5,6 +5,20 @@
 <meta property="og:title" content="今日は下半身の日">
 <meta property="og:description" content="ボタンを連打してスクワットするだけの、くだらなくてハマるゲーム。重さは背中の岩の数で増えていきます。">
 <meta property="og:type" content="website">
+<!-- Google tag (gtag.js): 非同期。読み込めなくてもゲームはそのまま動作する。 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2QKW6SFXZL"></script>
+<script>
+const GA_ID = 'G-2QKW6SFXZL';
+// 結果画面の外部リンク。行き先を変更するときはここだけ差し替える。
+const LINKS = {
+ line:'https://line.me/R/ti/p/@199cznwu',
+ form:'https://www.youtube.com/watch?v=kLKvBhCqtks'
+};
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', GA_ID);
+</script>
 <style>
 :root{--ink:#273d35;--paper:#f6f2e9;--green:#42755d;--orange:#d77840;--red:#c84e44}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;overscroll-behavior:none}button,input{font:inherit;touch-action:manipulation}button{border:1px solid #d3d6c9;border-radius:14px;background:#fffcf5;color:var(--ink);cursor:pointer;font-weight:750;min-height:44px}button:active{transform:translateY(2px);background:#e6eadc}button:disabled{opacity:.55;cursor:default}button:focus-visible,input:focus-visible{outline:3px solid var(--orange);outline-offset:2px}.app{max-width:480px;margin:auto;padding:18px 20px max(16px,env(safe-area-inset-bottom));min-height:100svh}header{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:2px;font-weight:800}#mute{font-size:12px;letter-spacing:0;min-height:34px;padding:0 12px}h1{font-size:30px;letter-spacing:-1.5px;line-height:1.35;margin:20px 0 5px}h1 small{display:block;font-size:16px;letter-spacing:1px}.sub{font-size:12px;color:#738077;margin:4px 0}.card{background:#fffaf0;border:1px solid #dfdfd0;border-radius:18px;padding:16px;margin:12px 0}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.levels{display:flex;justify-content:space-around;text-align:center;font-size:11px}.levels b{display:block;font-size:20px;margin-top:4px}.weight{font-size:46px;font-weight:850;letter-spacing:-2px}.unit{font-size:15px;letter-spacing:0;font-weight:600}.step{width:55px;height:48px}input[type=range]{width:100%;accent-color:var(--green);height:30px}.primary{background:var(--green);color:white;border:0;width:100%;min-height:55px;font-size:17px}.warning{font-size:12px;font-weight:750;min-height:18px}.tone1{color:#986a22}.tone2,.tone3{color:var(--red)}.records{font-size:12px}.quiet{border:0;background:transparent;font-size:11px;color:#7e877b;display:block;margin:12px auto}.stage{position:relative;min-height:0;display:flex;align-items:center;justify-content:center}.stage svg{width:100%;height:100%;max-height:290px;overflow:visible}.hero{height:185px}.badge{position:absolute;bottom:7px;font-size:10px;letter-spacing:2px;color:#7a887b}.guide{font-size:12px;line-height:1.8;margin:12px 1px}.screen[hidden]{display:none!important}#play{height:calc(100dvh - 70px - env(safe-area-inset-bottom));display:flex;flex-direction:column;padding-top:12px;overflow:hidden}.timer{height:5px;background:#dce0d3;border-radius:5px;overflow:hidden}.timer i{display:block;height:100%;background:var(--green);width:100%}.score{padding-top:10px}.rep{font-size:58px;line-height:1;font-weight:850;letter-spacing:-3px}.label{font-size:10px;letter-spacing:1.5px}.stats{text-align:right;font-size:12px;line-height:1.8}.stats b{font-size:20px}.playstage{flex:1;min-height:120px}.depth{position:absolute;right:0;top:15%;bottom:17%;width:6px;background:#dce0d3;border-radius:8px}.depth i{display:block;width:100%;background:var(--orange);border-radius:8px}.depth span{position:absolute;right:10px;bottom:0;font-size:10px;white-space:nowrap}#message{text-align:center;font-size:clamp(11px,3.3vw,14px);font-weight:800;min-height:24px;color:var(--orange)}.collapse{height:24px;font-size:10px}.collapse progress{width:100%;height:6px;accent-color:var(--red)}.controls{flex:none;padding-top:8px;touch-action:none;user-select:none;-webkit-user-select:none}.formbuttons{display:flex;gap:8px;margin-bottom:9px}.formbuttons button{flex:1;padding:9px 12px;font-size:13px;text-align:left}.meter{height:5px;background:#e2e4d8;border-radius:4px;overflow:hidden;margin-top:7px}.meter i{height:100%;display:block}.joints{display:flex;gap:8px}.joints button{flex:1;height:88px;font-size:18px;background:#e7ecdf;border-color:#cbd5bf}.joints small{display:block;font-size:10px;font-weight:500;margin-top:7px;letter-spacing:1px}.joints .ahead{background:#f5d1c6;border-color:var(--red);color:var(--red);box-shadow:0 0 14px #c84e4430}.keyhint{text-align:center;font-size:9px;color:#879080;margin-top:7px}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:84px;font-weight:900;color:var(--green);pointer-events:none;text-shadow:0 2px 0 var(--paper)}#result h2{font-size:29px;margin:28px 0 5px}.resultrep{font-size:84px;font-weight:850;letter-spacing:-5px}.xp{font-size:13px;line-height:2.2}.secondary{width:100%;margin-top:10px;min-height:48px}.save-note:empty{display:none}body.playing{overflow:hidden;height:100dvh}body.playing .app{height:100dvh;min-height:0}.save-note{font-size:11px;color:var(--red);text-align:center}#result .hero{height:150px}@media(max-height:700px){.app{padding-top:10px}#play{height:calc(100dvh - 58px - env(safe-area-inset-bottom))}.joints button{height:70px}.stage svg{max-height:235px}.hero{height:140px}h1{margin-top:12px;font-size:27px}.card{margin:8px 0;padding:12px}.guide{margin:8px 0;font-size:11px}.rep{font-size:48px}}@media(prefers-reduced-motion:reduce){button:active{transform:none}}
 .resultSummary{text-align:center;margin-top:10px}.resultSummary .resultrep{font-size:60px;line-height:1}.resultSummary p{margin:6px 0;font-size:13px}.resultSummary b:empty{display:none}.resultActions{display:flex;gap:8px;margin-top:12px}.resultActions button{flex:1;min-height:48px;font-size:13px;margin:0}.resultActions .secondary{background:#fffcf5}#result h2{font-size:24px;margin:16px 0 5px}#result .hero{height:210px}#result .xp{margin-top:0}@media(max-height:700px){#result .hero{height:155px}#result h2{margin-top:10px;font-size:21px}.resultSummary{margin-top:6px}.resultSummary .resultrep{font-size:50px}.resultActions{margin-top:8px}}
@@ -21,11 +35,6 @@
 <section id="result" class="screen" hidden><h2 id="resultHeading">おつかれさま。</h2><p class="sub" id="resultStatus"></p><div class="resultSummary"><span class="resultrep" id="resultReps"></span> REPS<p id="resultTotal"></p><b id="newBest" style="color:var(--orange)"></b></div><div class="resultActions"><button id="retry" class="primary">もう一回 →</button><button id="choose" class="secondary">重量を選び直す</button></div><div class="stage hero" id="resultArt"></div><div class="card xp" id="xp"></div><nav class="resultResources" aria-label="体づくりのヒント"><a id="lineLink" class="resourceLink line" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">LINEで体のヒントを受け取る</a><a id="formLink" class="resourceLink" target="_blank" rel="noopener" aria-disabled="true" tabindex="-1">スクワットのフォームを学ぶ</a></nav></section><p class="save-note" id="saveNote" role="status"></p></div>
 <script>
 'use strict';
-// 結果画面の外部リンク。行き先を変更するときはここだけ差し替える。
-const LINKS = {
- line:'https://line.me/R/ti/p/@199cznwu',
- form:'https://www.youtube.com/watch?v=kLKvBhCqtks'
-};
 // 試作v1の調整値。秒・kg・XPを基準とし、外部リソースは使用しない。
 const CONFIG = {
  storageKey:'yakkuru-squat-v1', duration:30, countdown:3, minWeight:20, maxWeight:300, weightStep:5,
@@ -38,6 +47,15 @@ const CONFIG = {
  xpPerLevel:100, legXPDivisor:10, formTapXP:.2, cleanRepXP:1, recommendedBase:20, recommendedGains:[8,4,4],
  popVolume:.025, popSeconds:.045
 };
+// 計測専用。ゲームや保存データに書き込まず、タグの失敗もゲームへ伝播させない。
+const measuredResults = new WeakSet();
+function trackEvent(name){
+ try{if(typeof window.gtag==='function')window.gtag('event',name,{transport_type:'beacon'});}catch(e){}
+}
+function trackResult(){
+ if(!game||measuredResults.has(game))return;
+ measuredResults.add(game);trackEvent('result_view');
+}
 const $=id=>document.getElementById(id), names=['足首','膝','股関節'], parts=['下半身','背中','体幹'];
 const fresh=()=>({xp:[0,0,0],best:0,total:0});
 let record=fresh(), selected=20, muted=false, audio, game=null, view='title', last=performance.now();
@@ -46,7 +64,7 @@ const levels=()=>record.xp.map(n=>1+Math.floor(n/CONFIG.xpPerLevel));
 const recommended=()=>Math.floor((CONFIG.recommendedBase+levels().reduce((s,l,i)=>s+(l-1)*CONFIG.recommendedGains[i],0))/CONFIG.weightStep)*CONFIG.weightStep;
 function loadFor(w){const r=w/recommended(),tier=CONFIG.loads.findIndex(l=>r<=l.max),load=CONFIG.loads[tier];return {...load,tier,r,n:CONFIG.baseN+Math.floor((w-CONFIG.minWeight)/CONFIG.nWeightDivisor)+load.extra};}
 function save(){try{localStorage.setItem(CONFIG.storageKey,JSON.stringify(record));$('saveNote').textContent='';}catch(e){$('saveNote').textContent='保存できませんでした。ブラウザの保存設定をご確認ください。';}}
-function show(v){view=v;if(v==='result')protectResultButtons();document.body.classList.toggle('playing',v==='play');for(const id of ['title','play','result'])$(id).hidden=id!==v;}
+function show(v){view=v;if(v==='result')protectResultButtons();document.body.classList.toggle('playing',v==='play');for(const id of ['title','play','result'])$(id).hidden=id!==v;if(v==='result')trackResult();}
 function title(){show('title');$('levels').innerHTML=levels().map((l,i)=>`<div>${parts[i]}<b>Lv.${l}</b></div>`).join('');$('recommended').textContent=`推奨 ${recommended()} kg`;$('best').textContent=`自己ベスト ${record.best||'—'}${record.best?' kg':''}`;$('total').textContent=`累計 ${record.total} レップ`;weightUI();}
 function weightUI(){const l=loadFor(selected);$('weight').value=selected;$('weightText').textContent=selected;$('weightWarning').textContent=['適正。今日も、ぼちぼち。','重いかも','かなり重い','危険！潰れるかも'][l.tier];$('weightWarning').className='warning tone'+l.tier;$('loadInfo').textContent=`${l.label} · 各 ${l.n} 回`;$('minus').disabled=selected===CONFIG.minWeight;$('plus').disabled=selected===CONFIG.maxWeight;}
 function select(w){selected=Math.max(CONFIG.minWeight,Math.min(CONFIG.maxWeight,w));weightUI();}
@@ -440,6 +458,7 @@ for(const id of ['lineLink','formLink']){
  link.addEventListener('pointerdown',()=>resultPointerReady.set(link,resultButtonsReady()));
  for(const event of ['click','auxclick'])link.addEventListener(event,e=>{
   if(!resultButtonsReady()||(e.detail>0&&!resultPointerReady.get(link)))e.preventDefault();
+  else if(event==='click'||e.button===1)trackEvent(id==='lineLink'?'line_click':'form_click');
   resultPointerReady.delete(link);
  });
 }
